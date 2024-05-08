@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+{% block meta_description %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+
+{% block content %}
+<div class="row row-sm">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">Users Table</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive userlist-table">
+                    <table class="table card-table table-striped table-vcenter text-nowrap mb-0">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.user_id }}</td>
+                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.date }}</td>
+                                <td>
+                                    {% if user.is_verified %}
+                                    <span class="text-success">Active</span>
+                                    {% else %}
+                                    <span class="text-muted">Inactive</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <form method="POST" action="{{ url_for('manage_userlist', user_id=user.id) }}">
+                                            {% if user.is_verified %}
+                                            <input type="hidden" name="action" value="suspend">
+                                            <button type="submit" class="btn btn-icon btn-warning" data-bs-toggle="tooltip" title="Suspend Agent" data-bs-placement="top">
+                                                <!-- Your button icon or text for suspend action -->
+                                            </button>
+                                            {% else %}
+                                            <button type="button" class="btn btn-icon btn-warning disabled" data-bs-toggle="tooltip" title="Suspend Agent" data-bs-placement="top" disabled>
+                                                <!-- Your button icon or text for suspend action (disabled) -->
+                                            </button>
+                                            {% endif %}
+                                        </form>
+
+                                        <form method="POST" action="{{ url_for('manage_userlist', user_id=user.id) }}">
+                                            {% if not user.is_verified %}
+                                            <input type="hidden" name="action" value="activate">
+                                            <button type="submit" class="btn btn-icon btn-success" data-bs-toggle="tooltip" title="Activate Agent" data-bs-placement="top">
+                                                <!-- Your button icon or text for activate action -->
+                                            </button>
+                                            {% else %}
+                                            <button type="button" class="btn btn-icon btn-success disabled" data-bs-toggle="tooltip" title="Activate Agent" data-bs-placement="top" disabled>
+                                                <!-- Your button icon or text for activate action (disabled) -->
+                                            </button>
+                                            {% endif %}
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- COL END -->
+</div>
+<!-- row closed  -->
+<!-- Container closed -->
+<!-- main-content closed -->
+{% endblock %}

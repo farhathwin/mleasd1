@@ -1,0 +1,193 @@
+{% extends "base_agent.html" %}
+
+{% block title %}Account Settings | My Website{% endblock %}
+{% block meta_description %}Description for the account settings page{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Keywords specific to the account settings page{% endblock %}
+
+{% block content %}
+    <!-- row -->
+    <div class="card custom-card main-content-body-profile">
+	
+		<div class="card-body tab-content h-100">
+			<div class="card">
+				<div class="card-body" data-select2-id="12">
+					<form class="form-horizontal" method="post" data-select2-id="11" id="agentProfileForm">
+						<div class="mb-4 main-content-label">Profile Settings</div>
+						
+                        <div class="form-group">
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Agent Code</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Agent Code" value="{{ user.pcc_code }}" id="agentCode" readonly>
+										
+									</div>
+								</div>
+	
+								<!-- Repeat the pattern for other rows -->
+
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Full Name</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Full Name" value="{{ user.first_name }} {{ user.last_name }}" id="fullName" readonly>
+										
+									</div>
+								</div>
+	
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Defult EmailID</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Defult EmailID" value="{{ user.email }}" id="defultmailid" readonly>
+										
+									</div>
+								</div>
+	
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Legal Business Name</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Legal Business Name" value="{{ user.agent_business_name}}" id="businessName" readonly>
+										
+									</div>
+								</div>
+                                <form class="form-horizontal" method="post" data-select2-id="11" id="agentProfileForm">
+									<!-- Your form fields go here -->
+								</form>
+                                <div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Trading Name</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Trading Name" name="trading_name" value="{{ user.trading_name if user.trading_name is not none else '' }}">
+									</div>
+								</div>
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Address Line 1</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Address Line 1" name="street_1" value="{{ user.street_1.title() if user.street_1 is not none else '' }}">
+									</div>
+								</div>
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Address Line 2</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Address Line 2" name="street_2" value="{{ user.street_2.title() if user.street_2 is not none else '' }}">
+									</div>
+								</div>
+								
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Town/City</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Town/City" name="town_city" value="{{ user.town_city.title() if user.town_city is not none else '' }}">
+									</div>
+								</div>
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Post Code </label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Post Code" name="post_code" value="{{ user.post_code.title() if user.post_code is not none else '' }}">
+									</div>
+								</div>
+
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">State Province	</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="State Province" name="state_province" value="{{ user.state_province.title() if user.state_province is not none else '' }}">
+									</div>
+								</div>
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Country	</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Country" name="country" value="{{ user.country.title() if user.country is not none else '' }}">
+									</div>
+								</div>
+								
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Business Phone NO</label>
+									</div>
+									<div class="col-md-10">
+										<div class="iti">
+											<input type="tel" class="form-control" placeholder="Business Phone NO" name="business_phone" id="businhessPone" value="{{ user.business_phone if user.business_phone is not none else '' }}">
+										</div>
+									</div>
+								</div>
+								
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Business EmailID</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Business EmailID" name="business_email" id="loginEmail" value="{{ user.business_email if user.business_email is not none else '' }}">
+										<div id="emailValidationStatus"></div>
+									</div>
+								</div>
+								
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Website</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" placeholder="Website" name="website" value="{{ user.website if user.website is not none else '' }}">
+									</div>
+								</div>
+													
+									
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Upload Logo</label>
+									</div>
+									<div class="col-md-10">
+										<input type="file" class="form-control" name="logo">
+									</div>
+								</div>
+								
+								<!-- Display the last uploaded image file link -->
+								<div class="row my-3">
+									<div class="col-md-2">
+										<label class="form-label">Last Uploaded Logo</label>
+									</div>
+									<div class="col-md-10">
+										{% if user.logo_filename %}
+											<p>{{ user.logo_filename }}</p>
+											<a href="{{ url_for('static', filename='img/' + user.logo_filename) }}" target="_blank">
+												<img src="{{ url_for('static', filename='img/' + user.logo_filename) }}" alt="Logo" style="max-width: 200px; max-height: 200px;">
+											</a>
+										{% else %}
+											<p>No logo uploaded</p>
+										{% endif %}
+									</div>
+								</div>
+								
+								<div class="row my-3">
+									<div class="col-md-2"></div>
+									<button type="submit" class="btn btn-primary" id="updateProfileBtn">Update Profile</button>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- row closed -->
+		</div>
+		
+		<!-- Container closed -->
+	{% endblock %}
+

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Master Agent Dashboard| MLEASD.COM{% endblock %}
+{% block meta_description %}Master Agent Dashboard| MLEASD.COM{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Master Agent Dashboard| MLEASD.COM{% endblock %}
+
+{% block content %}
+
+<!-- Page -->
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- The content half -->
+        <div class="bg-white">
+            <div class="login d-flex align-items-center py-2">
+                <!-- Demo content-->
+                <div class="container p-0">
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10 col-xl-9 mx-auto">
+                            <div class="card-sigin">
+                               
+                                <div class="main-signup-header">
+                                    <h2 class="text-primary">Create User</h2>
+                                    <form method="POST" action="{{ url_for('register_subuser') }}">
+                                        <div class="mb-3">
+                                            <label for="first_name" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="last_name" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                            <div id="email-validation-msg" class="text-danger">
+                                                {% with messages = get_flashed_messages(category_filter='email-danger') %}
+                                                    {% for message in messages %}
+                                                        {{ message }}
+                                                    {% endfor %}
+                                                {% endwith %}
+                                            </div> <!-- Validation message -->
+                                        </div>
+                                      
+                                    
+                                        <button class="btn btn-main-primary btn-block" type="submit" onclick="generateOTP()">Create User</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End -->
+            </div>
+        </div><!-- End -->
+
+    </div>
+</div>
+
+{% endblock %}

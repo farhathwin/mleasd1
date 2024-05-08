@@ -1,0 +1,142 @@
+:root {
+  --pr-rgb: 1, 98, 232;
+  --primary-bg-color: #1753fc;
+  --primary-bg-hover: #025cd8;
+  --primary-bg-border: #0162e8;
+  --dark-theme: #1f2940;
+  --dark-body: #141b2d;
+  --primary-05: rgba(var(--pr-rgb), 0.05);
+  --primary-1: rgba(var(--pr-rgb), 0.1);
+  --primary-2: rgba(var(--pr-rgb), 0.2);
+  --primary-3: rgba(var(--pr-rgb), 0.3);
+  --primary-5: rgba(var(--pr-rgb), 0.5);
+  --primary-8: rgba(var(--pr-rgb), 0.8);
+  --blue: #0162e8;
+  --indigo: #0162e8;
+  --purple: $purple;
+  --pink: $pink;
+  --red: $danger;
+  --orange: $orange;
+  --yellow: $warning;
+  --green: $success;
+  --teal: $teal;
+  --cyan: $info;
+  --white: $white;
+  --gray: $gray-600;
+  --gray-dark: $gray-800;
+  --primary: $primary;
+  --secondary: $gray-600;
+  --success: $success;
+  --info: $info;
+  --warning: $warning;
+  --danger: $danger;
+  --light: $gray-100;
+  --dark: $gray-800;
+  --float-left: left;
+  --float-right: right;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+$background: #f0f3f7;
+$default-color: #2e384d;
+$icons-color: #596b7e;
+$border: rgb(0, 0, 0, 0.1);
+$border-2: #e4e1f1;
+$muted: #7987a1;
+
+/*Color variables*/
+$primary: var(--primary-bg-color);
+$primary-hover: var(--primary-bg-hover);
+$primary-border: var(--primary-bg-border);
+$primary-05: var(--primary-05);
+$primary-1: var(--primary-1);
+$primary-2: var(--primary-2);
+$primary-3: var(--primary-3);
+$primary-5: var(--primary-5);
+$primary-8: var(--primary-8);
+$secondary: #9258f1;
+
+$pink: #f10075;
+$teal: #00cccc;
+$purple: #4800c9;
+$success: #22c03c;
+$warning: #fbbc0b;
+$danger: #ee335e;
+$info: #00b9ff;
+$orange: #fd7e14;
+$dark: #3b4863;
+$indigo: #ac50bb;
+$white: #fff;
+$black: #000;
+
+/*gray variables*/
+$gray-100: #f9f9fb;
+$gray-200: #dde2ef;
+$gray-300: #d0d7e8;
+$gray-400: #b9c2d8;
+$gray-500: #949eb7;
+$gray-600: #737f9e;
+$gray-700: #4d5875;
+$gray-800: #364261;
+$gray-900: #242f48;
+
+/*white variables*/
+$white-1: rgba(255, 255, 255, 0.1);
+$white-2: rgba(255, 255, 255, 0.2);
+$white-3: rgba(255, 255, 255, 0.3);
+$white-4: rgba(255, 255, 255, 0.4);
+$white-5: rgba(255, 255, 255, 0.5);
+$white-6: rgba(255, 255, 255, 0.6);
+$white-7: rgba(255, 255, 255, 0.7);
+$white-8: rgba(255, 255, 255, 0.8);
+$white-9: rgba(255, 255, 255, 0.9);
+$white-05: rgba(255, 255, 255, 0.05);
+$white-08: rgba(255, 255, 255, 0.08);
+$white-75: rgba(255, 255, 255, 0.075);
+
+/*black variables*/
+$black-1: rgba(0, 0, 0, 0.1);
+$black-2: rgba(0, 0, 0, 0.2);
+$black-3: rgba(0, 0, 0, 0.3);
+$black-4: rgba(0, 0, 0, 0.4);
+$black-5: rgba(0, 0, 0, 0.5);
+$black-6: rgba(0, 0, 0, 0.6);
+$black-7: rgba(0, 0, 0, 0.7);
+$black-8: rgba(0, 0, 0, 0.8);
+$black-9: rgba(0, 0, 0, 0.9);
+$black-05: rgba(0, 0, 0, 0.05);
+
+/*shadow variables*/
+$shadow: 0 8px 16px 0 rgba(162, 169, 204, 0.24);;
+
+$dark-theme: var(--dark-theme);
+$dark-theme2: rgba(0, 0, 0, 0.2);
+$dark-body: var(--dark-body);
+$dark-color: #dde3ea;
+$dark-border: rgba(255, 255, 255, 0.1);
+$dark-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 8px 16px 0 rgba(0, 0, 0, 0.12);
+
+$primary-gradient: linear-gradient(to right,
+    var(--primary-bg-color) 0%,
+    #0db2de 100%);
+
+    $primary-gradient-bottom: linear-gradient(to bottom,
+    var(--primary-bg-color) 0%,
+    #0db2de 100%);
+
+$float-left: var(--float-left);
+$float-right: var(--float-right);
+
+[dir="rtl"] {
+  --float-left: right;
+  --float-right: left;
+}

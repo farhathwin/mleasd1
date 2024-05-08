@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+{% block meta_description %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+
+{% block content %}
+    <div class="row row-sm">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title">Users Table</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive userlist-table">
+                        <table class="table card-table table-striped table-vcenter text-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Name</th>
+                                    <th>Created</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for agent in agent_list %}
+                                    <tr>
+                                        <td>{{ agent.id }}</td>
+                                        <td>{{ agent.first_name }} {{ agent.last_name }}</td>
+                                        <td>{{ agent.date }}</td>
+                                        <td>
+                                            {% if agent.is_verified == 1 %}
+                                                <span class="text-success">Active</span>
+                                            {% else %}
+                                                <span class="text-muted">Inactive</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <form method="POST" action="{{ url_for('manage_agent', user_id=agent.id) }}">
+                                                    {% if agent.is_verified == 1 %}
+                                                        <input type="hidden" name="action" value="suspend">
+                                                        <button type="submit" class="btn btn-icon btn-warning" data-bs-toggle="tooltip" title="Suspend Agent" data-bs-placement="top">
+                                                            
+                                                        </button>
+                                                    {% else %}
+                                                        <button type="button" class="btn btn-icon btn-warning disabled" data-bs-toggle="tooltip" title="Suspend Agent" data-bs-placement="top" disabled>
+                                                            
+                                                        </button>
+                                                    {% endif %}
+                                                </form>
+                            
+                                                <form method="POST" action="{{ url_for('manage_agent', user_id=agent.id) }}">
+                                                    {% if agent.is_verified == 0 %}
+                                                        <input type="hidden" name="action" value="activate">
+                                                        <button type="submit" class="btn btn-icon btn-success" data-bs-toggle="tooltip" title="Activate Agent" data-bs-placement="top">
+                                                            
+                                                        </button>
+                                                    {% else %}
+                                                        <button type="button" class="btn btn-icon btn-success disabled" data-bs-toggle="tooltip" title="Activate Agent" data-bs-placement="top" disabled>
+                                                            
+                                                        </button>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0);">{{ agent.email }}</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- COL END -->
+    </div>
+    <!-- row closed  -->
+    <!-- Container closed -->
+    <!-- main-content closed -->
+{% endblock %}

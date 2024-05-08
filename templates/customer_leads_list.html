@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Leads | MLEASD.COM{% endblock %}
+{% block meta_description %}View and manage customer leads{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Customer Leads, Management{% endblock %}
+
+{% block content %}
+<div class="row row-sm">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="card-title mb-0">Customer Leads</h6>
+                <div>
+                    <!-- Button to create new leads -->
+                    <a href="{{ url_for('create_leads') }}" class="btn btn-primary">Create New Leads</a>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <form method="POST" action="{{ url_for('customer_leads_list') }}">
+                    <div class="table-responsive userlist-table">
+                        <table class="table card-table table-striped table-vcenter text-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Lead ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Phone No</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lead in leads %}
+                                <tr>
+                                    <td><input type="checkbox" name="selected_leads" value="{{ lead.id }}"></td>
+                                    <td>{{ lead.lead_id }}</td>
+                                    <td>{{ lead.customer.full_name }}</td>
+                                    <td>{{ lead.customer.phone_no }}</td>
+                                    <td>{{ lead.customer.email }}</td>
+                                    <td>
+                                        <a href="{{ url_for('update_leads', lead_id=lead.lead_id) }}" class="btn btn-sm btn-info">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        {% if session.company_id and session.user_id %}
+                        <div>
+                            <label for="target_user_id">Transfer to:</label>
+                            <select name="target_user_id" id="target_user_id" class="form-control">
+                                {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Transfer Selected Leads</button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

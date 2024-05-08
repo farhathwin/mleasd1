@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Create Lead | Your Website Name{% endblock %}
+{% block meta_description %}Create Lead | Your Website Name{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Create, Lead, Website{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Create or Update Lead</div>
+                <div class="card-body">
+                    <form id="leadCreateForm" action="{{ url_for('create_leads') }}" method="POST">
+                        <div class="mb-3">
+                            <label for="customerSearch">Search Customer:</label>
+                            <input type="text" id="customerSearch" class="form-control" placeholder="Search by name or phone" oninput="filterCustomers()">
+                            <ul id="customerList" class="list-group mt-2" style="display: none;">
+                                {% for customer in customers %}
+                                <li class="list-group-item list-group-item-action" data-customer-id="{{ customer.customer_id }}" onclick="selectCustomer(this)">
+                                    {{ customer.full_name }} - {{ customer.phone_no }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <input type="hidden" name="customer_id" id="selectedCustomerId">
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#customerCreateModal">
+                                Create New Customer
+                            </button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lead_type">Lead Type:</label>
+                            <select class="form-control" id="lead_type" name="lead_type">
+                                <option value="Facebook">Facebook</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                                <option value="Phone call">Phone call</option>
+                                <option value="Walking">Walking</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marketing_type">Marketing Type:</label>
+                            <select class="form-control" id="marketing_type" name="marketing_type">
+                                <option value="Meta">Meta</option>
+                                <option value="Google">Google</option>
+                                <option value="Personal">Personal</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Lead</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'model_customer_create.html' %}
+
+
+
+{% endblock %}

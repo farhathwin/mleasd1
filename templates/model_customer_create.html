@@ -1,0 +1,35 @@
+<!-- Customer Creation Modal -->
+<div class="modal fade" id="customerCreateModal" tabindex="-1" aria-labelledby="customerCreateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerCreateModalLabel">New Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customerCreateModelForm" action="{{ url_for('customer_create') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="full_name_modal">Full Name:</label>
+                        <input type="text" class="form-control" id="full_name_modal" name="full_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email_modal">Email:</label>
+                        <input type="email" class="form-control" id="email_modal" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_no" class="form-label">Phone No</label>
+                        <!-- Include the phone number input with the ITI library -->
+                        <input type="tel" id="phone_no" name="phone_no" placeholder="Phone Number" required>
+                        <!-- Add a hidden input field to store the country code -->
+                        <input type="hidden" id="country_code" name="country_code">
+                        <!-- Add a span for error message display -->
+                        <span id="error-msg" class="text-danger"></span>
+                        <!-- Add a span for valid message display -->
+                        <span id="valid-msg" class="text-success"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Customer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

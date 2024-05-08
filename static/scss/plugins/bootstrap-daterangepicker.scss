@@ -1,0 +1,455 @@
+$color_1: inherit;
+$color_2: #757979;
+$color_3: #a6abab;
+$color_4: #ccc;
+$color_5: #d9dae8;
+$color_6: #000;
+$color_7: #fff;
+$color_8: #f4f0f2;
+$background-color_1: #fff;
+$background-color_2: #f8f9fa;
+$background-color_3: #ebf4f8;
+$background-color_4: #1753fc;
+$background-color_5: #f0f3f7;
+$border-color_1: transparent;
+$border-color_2: rgb(169, 169, 169,0.3);
+$border-block-end-color_1: rgba(0, 0, 0, 0.2);
+
+/*  Larger Screen Styling */
+.daterangepicker {
+	position: absolute;
+	color: $color_1;
+	background-color: $background-color_1;
+	border-radius: 4px;
+	width: 278px;
+	padding: 14px 4px;
+	margin-block-start: 1px;
+	top: 195px !important;
+	left: 20px;
+	.calendar {
+		display: none;
+		max-width: 270px;
+		margin: 4px;
+		th {
+			white-space: nowrap;
+			text-align: center;
+			min-width: 32px;
+			color: $color_2 !important;
+			font-size: 14px;
+		}
+		td {
+			white-space: nowrap;
+			text-align: center;
+			min-width: 32px;
+			color: $color_3 !important;
+			font-size: 14px;
+		}
+	}
+	.calendar.single {
+		.calendar-table {
+			border: none;
+		}
+	}
+	.calendar-table {
+		border: 1px solid #fff;
+		padding: 4px;
+		border-radius: 4px;
+		background-color: $background-color_1;
+	}
+	table {
+		width: 100%;
+		margin: 0;
+	}
+	td {
+		text-align: center;
+		width: 20px;
+		height: 20px;
+		border-radius: 4px;
+		border: 1px solid transparent;
+		white-space: nowrap;
+		cursor: pointer;
+	}
+	th {
+		text-align: center;
+		width: 20px;
+		height: 20px;
+		border-radius: 4px;
+		border: 1px solid transparent;
+		white-space: nowrap;
+		cursor: pointer;
+	}
+	td.available {
+		&:hover {
+			background-color: $background-color_2;
+			border-color: $border-color_1;
+			color: $color_1;
+		}
+	}
+	th.available {
+		&:hover {
+			background-color: $background-color_2;
+			border-color: $border-color_1;
+			color: $color_1;
+		}
+	}
+	td.week {
+		font-size: 80%;
+		color: $color_4;
+	}
+	th.week {
+		font-size: 80%;
+		color: $color_4;
+	}
+	td.off {
+		background-color: $background-color_1;
+		border-color: $border-color_1;
+		color: $color_5;
+	}
+	td.off.in-range {
+		background-color: $background-color_1;
+		border-color: $border-color_1;
+		color: $color_5;
+	}
+	td.off.start-date {
+		background-color: $background-color_1;
+		border-color: $border-color_1;
+		color: $color_5;
+	}
+	td.off.end-date {
+		background-color: $background-color_1;
+		border-color: $border-color_1;
+		color: $color_5;
+	}
+	td.in-range {
+		background-color: $background-color_3;
+		border-color: $border-color_1;
+		color: $color_6;
+		border-radius: 0;
+	}
+	td.start-date {
+		border-radius: 4px;
+	}
+	td.end-date {
+		border-radius: 4px;
+	}
+	td.start-date.end-date {
+		border-radius: 4px;
+	}
+	td.active {
+		background-color: $background-color_4;
+		border-color: $border-color_1;
+		color: $color_7 !important;
+		&:hover {
+			background-color: $background-color_4;
+			border-color: $border-color_1;
+			color: $color_7 !important;
+		}
+	}
+	th.month {
+		width: auto;
+	}
+	td.disabled {
+		color: $color_8;
+		cursor: not-allowed;
+		text-decoration: line-through;
+	}
+	option.disabled {
+		color: $color_8;
+		cursor: not-allowed;
+		text-decoration: line-through;
+	}
+	select.monthselect {
+		font-size: 12px;
+		padding: 1px;
+		height: auto;
+		margin: 0;
+		cursor: default;
+		margin-inline-end: 2%;
+		width: 56%;
+	}
+	select.yearselect {
+		font-size: 12px;
+		padding: 1px;
+		height: auto;
+		margin: 0;
+		cursor: default;
+		width: 40%;
+	}
+	select.hourselect {
+		width: 50px;
+		color: $color_2;
+		margin-block-end: 0;
+	}
+	select.minuteselect {
+		width: 50px;
+		color: $color_2;
+		margin-block-end: 0;
+	}
+	select.secondselect {
+		width: 50px;
+		color: $color_2;
+		margin-block-end: 0;
+	}
+	select.ampmselect {
+		width: 50px;
+		color: $color_2;
+		margin-block-end: 0;
+	}
+	.input-mini {
+		border: 1px solid #dfe6e6;
+		border-radius: 4px;
+		height: 30px;
+		line-height: 30px;
+		display: block;
+		margin: 0 0 5px 0;
+		padding: 0 6px 0 28px;
+		width: 100%;
+	}
+	.input-mini.active {
+		border: 1px solid #1753fc;
+		border-radius: 4px;
+	}
+	.daterangepicker_input {
+		position: relative;
+		i {
+			position: absolute;
+			left: 8px;
+			top: 8px;
+			color: $color_2;
+		}
+	}
+	.calendar-time {
+		text-align: center;
+		margin: 5px auto;
+		line-height: 30px;
+		position: relative;
+		padding-inline-start: 28px;
+		select.disabled {
+			color: $color_4;
+			cursor: not-allowed;
+		}
+	}
+}
+.daterangepicker.opensleft {
+	&:before {
+		right: 9px;
+	}
+	&:after {
+		right: 10px;
+	}
+}
+.daterangepicker.openscenter {
+	&:before {
+		left: 0;
+		right: 0;
+		width: 0;
+		margin-inline-start: auto;
+		margin-inline-end: auto;
+	}
+	&:after {
+		left: 0;
+		right: 0;
+		width: 0;
+		margin-inline-start: auto;
+		margin-inline-end: auto;
+	}
+}
+.daterangepicker.opensright {
+	&:before {
+		left: 339px;
+	}
+	&:after {
+		left: 340px;
+	}
+}
+.daterangepicker.dropup {
+	margin-block-start: -5px;
+	&:before {
+		top: initial;
+		bottom: -7px;
+		border-block-end: initial;
+		border-block-start: 7px solid #ccc;
+	}
+	&:after {
+		top: initial;
+		bottom: -6px;
+		border-block-end: initial;
+		border-block-start: 6px solid #fff;
+	}
+}
+.daterangepicker.dropdown-menu {
+	max-width: none;
+	z-index: 3001;
+	border: 0;
+}
+.daterangepicker.single {
+	.ranges {
+		float: none;
+	}
+	.calendar {
+		float: none;
+	}
+}
+.daterangepicker.show-calendar {
+	.calendar {
+		display: block;
+	}
+}
+.daterangepicker.rtl {
+	.input-mini {
+		padding-inline-end: 28px;
+		padding-inline-start: 6px;
+	}
+	.daterangepicker_input {
+		i {
+			left: auto;
+			right: 8px;
+		}
+	}
+}
+.ranges {
+	font-size: 11px;
+	float: none;
+	margin: 4px;
+	ul {
+		list-style: none;
+		margin: 0 auto;
+		padding: 0;
+		width: 100%;
+	}
+	li {
+		font-size: 13px;
+		background-color: $background-color_5;
+		border: 1px solid rgba(107,122,144,0.1);
+		border-radius: 4px;
+		padding: 3px 12px;
+		margin-block-end: 8px;
+		cursor: pointer;
+		&:hover {
+			background-color: $background-color_4;
+			border: 1px solid #1753fc;
+			color: $color_7;
+		}
+	}
+	li.active {
+		background-color: $background-color_4;
+		border: 1px solid #1753fc;
+		color: $color_7;
+	}
+}
+select {
+	border-radius: 0px;
+	border-color: $border-color_2;
+}
+@media (min-width: 564px) {
+	.daterangepicker {
+		width: auto;
+		.ranges {
+			ul {
+				width: 160px;
+			}
+		}
+		.calendar.left {
+			clear: none !important;
+		}
+	}
+	.daterangepicker.single {
+		.ranges {
+			ul {
+				width: 100%;
+			}
+		}
+		.calendar.left {
+			clear: none;
+		}
+	}
+	.daterangepicker.single.ltr {
+		.ranges {
+			float: left;
+		}
+		.calendar {
+			float: left;
+		}
+	}
+	.daterangepicker.single.rtl {
+		.ranges {
+			float: right;
+		}
+		.calendar {
+			float: right;
+		}
+	}
+	.daterangepicker.ltr {
+		direction: ltr;
+		float: none;
+		margin: 0 auto;
+		text-align: center !important;
+		.calendar.left {
+			clear: left;
+			margin-inline-end: 0;
+			.calendar-table {
+				border-inline-end: none;
+				border-start-end-radius: 0;
+				padding-inline-end: 12px;
+			}
+		}
+		.calendar.right {
+			margin-inline-start: 0;
+			.calendar-table {
+				border-inline-start: none;
+				border-start-start-radius: 0;
+			}
+		}
+		.left {
+			.daterangepicker_input {
+				padding-inline-end: 12px;
+			}
+		}
+		.ranges {
+			float: left;
+			float: none;
+		}
+		.calendar {
+			float: left;
+		}
+	}
+	.daterangepicker.rtl {
+		direction: rtl;
+		text-align: right;
+		.calendar.left {
+			clear: right;
+			margin-inline-start: 0;
+			.calendar-table {
+				border-inline-start: none;
+				border-start-start-radius: 0;
+				padding-inline-start: 12px;
+			}
+		}
+		.calendar.right {
+			margin-inline-end: 0;
+			.calendar-table {
+				border-inline-end: none;
+				border-start-end-radius: 0;
+			}
+		}
+		.left {
+			.daterangepicker_input {
+				padding-inline-start: 12px;
+			}
+		}
+		.ranges {
+			text-align: right;
+			float: right;
+			float: right;
+		}
+		.calendar {
+			text-align: right;
+			float: right;
+		}
+	}
+	@media (min-width: 730px)  {
+				.daterangepicker .ranges { 
+					width: auto;
+			}
+		}
+	}

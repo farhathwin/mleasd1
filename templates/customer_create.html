@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Create Customer | Your Website Name{% endblock %}
+{% block meta_description %}Create Customer | Your Website Name{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Create, Customer, Website{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Create Customer</div>
+                <form id="customerCreateForm" action="{{ url_for('customer_create') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Billing Name</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter Billing Name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone_no" class="form-label">Phone No</label>
+                        <!-- Include the phone number input with the ITI library -->
+                        <input type="tel" id="phone_no" name="phone_no" placeholder="Phone Number" required>
+                        <!-- Add a hidden input field to store the country code -->
+                        <input type="hidden" id="country_code" name="country_code">
+                        <!-- Add a span for error message display -->
+                        <span id="error-msg" class="text-danger"></span>
+                        <!-- Add a span for valid message display -->
+                        <span id="valid-msg" class="text-success"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        <div id="error-message" class="text-danger"></div>
+                    </div>
+                    <button id="createCustomerBtn" class="btn btn-main-primary btn-block" type="submit">Create Customer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

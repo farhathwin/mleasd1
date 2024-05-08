@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Lead - ID: {{ lead.lead_id }}</h2>
+    <form method="POST" action="">
+        <div class="mb-3">
+            <label for="customerName">Customer Name</label>
+            <input type="text" id="customerName" value="{{ customer.full_name if customer else 'No Customer' }}" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="email">Email ID</label>
+            <input type="email" id="email" value="{{ customer.email if customer else 'No Email' }}" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNo">Phone No</label>
+            <input type="text" id="phoneNo" value="{{ customer.phone_no if customer else 'No Phone Number' }}" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="comment">Comment</label>
+            <textarea id="comment" name="comment" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Update Comment</button>
+        </div>
+    </form>
+
+    {% for comment in comments %}
+    <div class="comment-box" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <p>{{ comment.comment }}</p>
+        <small>Posted by {{ comment.user.first_name }} {{ comment.user.last_name }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+        <p>Last Updated: {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }} by {{ comment.user.first_name }} {{ comment.user.last_name }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

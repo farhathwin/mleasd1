@@ -1,0 +1,1763 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="Description" content="Bootstrap Responsive Admin Web Dashboard HTML5 Template">
+	<meta name="Author" content="Spruko Technologies Private Limited">
+	<meta name="Keywords"
+		content="admin dashboard, admin dashboard html css, bootstrap html template, admin panel html template, bootstrap admin dashboard, simple dashboard html css, admin dashboard html, admin template, bootstrap template, html css dashboard template, simple dashboard html template, html5 admin template, bootstrap admin template, admin panel dashboard, admin panel bootstrap 5">
+	
+	<!-- Title -->
+	<title>{% block title %}My Website{% endblock %}</title>
+
+	<!-- Favicon -->
+	<link rel="icon" href="../static/img/brand/favicon.png" type="image/x-icon">
+
+	<!-- Icons css -->
+	<link href="../static/css/icons.css" rel="stylesheet">
+
+	<!-- Bootstrap css -->
+	<link id="style" href="../static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- style css -->
+	<link href="../static/css/style.css" rel="stylesheet">
+	<link href="../static/css/plugins.css" rel="stylesheet">
+
+	<!--- Animations css-->
+	<link href="../static/css/animate.css" rel="stylesheet">
+
+</head>
+
+<body class="main-body app sidebar-mini ltr">
+
+	<!-- Loader -->
+	<div id="global-loader">
+		<img src="../static/img/loader.svg" class="loader-img" alt="Loader">
+	</div>
+	<!-- /Loader -->
+
+	<!-- Page -->
+	<div class="page custom-index">
+
+		<div>
+
+			<!-- main-header -->
+			<div class="main-header side-header sticky nav nav-item">
+				<div class="container-fluid main-container">
+					<div class="main-header-left">
+						<div class="responsive-logo">
+							<a href="index.html" class="header-logo">
+								<img src="../static/img/brand/logo.png" class="logo-1" alt="logo">
+								<img src="../static/img/brand/logo-light.png" class="dark-logo-1" alt="logo">
+							</a>
+						</div>
+						<div class="app-sidebar__toggle" data-bs-toggle="sidebar">
+							<a class="open-toggle" href="javascript:void(0);"><i
+									class="header-icon fe fe-align-left"></i></a>
+							<a class="close-toggle" href="javascript:void(0);"><i class="header-icons fe fe-x"></i></a>
+						</div>
+						<div class="main-header-center ms-2 d-sm-none d-md-none d-lg-block">
+							<input class="form-control" placeholder="Search..." type="search">
+							<button class="btn px-1 border-0">
+								<i class="fe fe-search d-none d-md-block"></i>
+							</button>
+						</div>
+					</div>
+					<div class="nav navbar-nav horizontal-nav header-nav">
+						<button data-bs-toggle="dropdown" class="btn btn-outline-light mx-2">
+							<i class="fe fe-grid me-2"></i>UI Kit <i class="icon ion-ios-arrow-down tx-11 mg-l-3"></i>
+						</button>
+						<div class="mega-dropdown nav-item">
+							<ul class="dropdown-menu mega-dropdown-menu container row">
+								<li>
+									<div class="d-flex align-items-center">
+										<div class="divOne">
+											<div class="position-relative">
+												<div class="arrow-ribbon">Upcomming Events</div>
+												<img class="rounded-1 ht-250 wd-350" alt="img"
+													src="../static/img/photos/22.jpg">
+												<div class="btn-absolute">
+													<a class="btn btn-sm rounded-5 btn-primary"
+														href="javascript:void(0);">More Info<i
+															class="bi bi-arrow-right ms-1"></i></a>
+												</div>
+											</div>
+										</div>
+										<div class="flex-grow-1 ms-4">
+											<div class="d-flex justify-content-between">
+												<div class="divTwo">
+													<div class="d-flex align-items-center mb-2">
+														<span class="legend bg-primary m-0 me-1 br-7"></span>
+														<h6 class="mb-0">Pages</h6>
+													</div>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);">
+														<i class="bi bi-chevron-right text-muted me-1 angle"></i>
+														Documentation</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Multi Pages</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i> Edit
+														Profile</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i> Mail
+														Settings</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Default Settings</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i> More
+														Settings</a>
+												</div>
+												<div class="divThree">
+													<div class="d-flex align-items-center mb-2">
+														<span class="legend bg-secondary m-0 me-1 br-7"></span>
+														<h6 class="mb-0">Engagement</h6>
+													</div>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Searcher</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Companies</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Lists</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Saved Searches</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Enrichment</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Settings</a>
+												</div>
+												<div class="divFour">
+													<div class="d-flex align-items-center mb-2">
+														<span class="legend bg-success m-0 me-1 br-7"></span>
+														<h6 class="mb-0">Resources</h6>
+													</div>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Blog</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Customer Stories</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Video Tutorials</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Documentation</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Legal</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														More</a>
+												</div>
+												<div class="divFive">
+													<div class="d-flex align-items-center mb-2">
+														<span class="legend bg-danger m-0 me-1 br-7"></span>
+														<h6 class="mb-0">Company</h6>
+													</div>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Press</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Careers</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Pages</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														Comunity</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i> Work
+														Culture</a>
+													<a class="dropdown-item px-0 tx-12" href="javascript:void(0);"><i
+															class="bi bi-chevron-right text-muted me-1"></i>
+														About Us</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="nav header-nav">
+						<button data-bs-toggle="dropdown" class="btn btn-outline-light">
+							Settings <i class="icon ion-ios-arrow-down tx-11 mg-l-3"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-left">
+							<a class="dropdown-item" href="#">Option 1</a>
+							<a class="dropdown-item" href="#">Option 2</a>
+							<a class="dropdown-item" href="#">Option 3</a>
+							<a class="dropdown-item" href="#">Option 4</a>
+							<a class="dropdown-item" href="#">Option 5</a>
+						</div>
+					</div>
+					<div class="main-header-right ms-auto">
+						<button class="navbar-toggler navresponsive-toggler d-lg-none ms-auto" type="button"
+							data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
+							aria-controls="navbarSupportedContent-4" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon fe fe-more-vertical"></span>
+						</button>
+						<div class="mb-0 navbar navbar-expand-lg navbar-nav-right responsive-navbar navbar-dark p-0">
+							<div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+								<ul class="nav nav-item navbar-nav-right ms-auto">
+									<li class="dropdown nav-item main-layout">
+										<a class="new nav-link theme-layout nav-link-bg layout-setting">
+											<span class="dark-layout"><i class="bx bx-moon header-icon-svgs"></i></span>
+											<span class="light-layout"><i class="bx bx-sun header-icon-svgs"></i></span>
+										</a>
+									</li>
+									<li class="nav-link search-icon d-lg-none d-block">
+										<form class="navbar-form" role="search">
+											<div class="input-group">
+												<input type="text" class="form-control" placeholder="Search">
+												<span class="input-group-btn">
+													<button type="reset" class="btn btn-default">
+														<i class="fa fa-times"></i>
+													</button>
+													<button type="submit" class="btn btn-default nav-link resp-btn">
+														<svg xmlns="http://www.w3.org/2000/svg" height="24px"
+															class="header-icon-svgs" viewBox="0 0 24 24" width="24px"
+															fill="#000000">
+															<path d="M0 0h24v24H0V0z" fill="none" />
+															<path
+																d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+														</svg>
+													</button>
+												</span>
+											</div>
+										</form>
+									</li>
+
+									<li class="dropdown nav-item main-header-message">
+										<a class="new nav-link" href="javascript:void(0);"><i
+												class="bx bx-cart-alt header-icon-svgs"></i></a>
+										<div class="dropdown-menu py-0">
+											<div class="menu-header-content border-bottom text-start">
+												<div class="d-flex justify-content-between align-items-center">
+													<h6 class="dropdown-title mb-0 fw-semibold">
+														Shopping Cart
+													</h6>
+													<span class="badge bg-warning"><a href="javascript:void(0);">Total
+															Items 6</a></span>
+												</div>
+											</div>
+											<div class="main-message-list cart-scroll">
+												<div class="d-flex border-bottom main-cart-item">
+													<div>
+														<a class="d-flex p-3" href="product-details.html">
+															<div class="avatar-md rounded-5">
+																<img src="../static/img/ecommerce/01.jpg" alt="img"
+																	class="rounded-5">
+															</div>
+															<div class="ms-3 text-start mt-2">
+																<h6 class="mb-1 text-muted">Flower Pot</h6>
+																<div class="text-dark tx-semibold tx-14">
+																	Price: $ 39.99
+																</div>
+															</div>
+														</a>
+													</div>
+													<div class="ms-auto my-auto">
+														<a href="javascript:void(0);" class="p-3">
+															<i class="fe fe-trash-2 text-end text-danger"></i>
+														</a>
+													</div>
+												</div>
+												<div class="d-flex border-bottom main-cart-item">
+													<div>
+														<a class="d-flex p-3" href="product-details.html">
+															<div class="avatar-md rounded-5">
+																<img src="../static/img/ecommerce/02.jpg" alt="img"
+																	class="rounded-5">
+															</div>
+															<div class="ms-3 text-start mt-2">
+																<h6 class="mb-1 text-muted">Black Chair</h6>
+																<div class="text-dark tx-semibold tx-14">
+																	Price: $ 69.99
+																</div>
+															</div>
+														</a>
+													</div>
+													<div class="ms-auto my-auto">
+														<a href="javascript:void(0);" class="p-3">
+															<i class="fe fe-trash-2 text-end text-danger"></i>
+														</a>
+													</div>
+												</div>
+												<div class="d-flex border-bottom main-cart-item">
+													<div>
+														<a class="d-flex p-3" href="product-details.html">
+															<div class="avatar-md rounded-5">
+																<img src="../static/img/ecommerce/03.jpg" alt="img"
+																	class="rounded-5">
+															</div>
+															<div class="ms-3 text-start mt-2">
+																<h6 class="mb-1 text-muted">Sports Shooes</h6>
+																<div class="text-dark tx-semibold tx-14">
+																	Price: $ 19.99
+																</div>
+															</div>
+														</a>
+													</div>
+													<div class="ms-auto my-auto">
+														<a href="javascript:void(0);" class="p-3">
+															<i class="fe fe-trash-2 text-end text-danger"></i>
+														</a>
+													</div>
+												</div>
+												<div class="d-flex border-bottom main-cart-item">
+													<div>
+														<a class="d-flex p-3" href="product-details.html">
+															<div class="avatar-md rounded-5">
+																<img src="../static/img/ecommerce/05.jpg" alt="img"
+																	class="rounded-5">
+															</div>
+															<div class="ms-3 text-start mt-2">
+																<h6 class="mb-1 text-muted">Cemara Lence</h6>
+																<div class="text-dark tx-semibold tx-14">
+																	Price: $ 59.99
+																</div>
+															</div>
+														</a>
+													</div>
+													<div class="ms-auto my-auto">
+														<a href="javascript:void(0);" class="p-3">
+															<i class="fe fe-trash-2 text-end text-danger"></i>
+														</a>
+													</div>
+												</div>
+												<div class="d-flex border-bottom main-cart-item">
+													<div>
+														<a class="d-flex p-3" href="product-details.html">
+															<div class="avatar-md rounded-5">
+																<img src="../static/img/ecommerce/04.jpg" alt="img"
+																	class="rounded-5">
+															</div>
+															<div class="ms-3 text-start mt-2">
+																<h6 class="mb-1 text-muted">Head Phones</h6>
+																<div class="text-dark tx-semibold tx-14">
+																	Price: $ 19.99
+																</div>
+															</div>
+														</a>
+													</div>
+													<div class="ms-auto my-auto">
+														<a href="javascript:void(0);" class="p-3">
+															<i class="fe fe-trash-2 text-end text-danger"></i>
+														</a>
+													</div>
+												</div>
+											</div>
+											<div class="text-center dropdown-footer">
+												<a href="product-cart.html">VIEW ALL</a>
+											</div>
+										</div>
+									</li>
+									<li class="dropdown nav-item main-header-message">
+										<a class="new nav-link" href="javascript:void(0);"><i
+												class="bx bx-message-square-dots header-icon-svgs"></i><span
+												class="pulse-danger"></span></a>
+										<div class="dropdown-menu py-0">
+											<div class="menu-header-content border-bottom text-start">
+												<div class="d-flex">
+													<h6 class="dropdown-title mb-1 fw-semibold">
+														Messages
+													</h6>
+													<a href="javascript:void(0);"
+														class="badge rounded-pill bg-success ms-auto my-auto float-end">Mark
+														All Read</a>
+												</div>
+											</div>
+											<div class="main-message-list chat-scroll">
+												<div class="p-3 d-flex border-bottom messages">
+													<div class="drop-img cover-image me-3"
+														data-bs-image-src="../static/img/faces/2.jpg">
+														<span class="avatar-status bg-teal"></span>
+													</div>
+													<div class="wd-90p">
+														<div class="d-flex">
+															<a href="chat.html">
+																<h6 class="mb-1 name">Gerninia</h6>
+															</a>
+															<small class="text-muted ms-auto text-end">
+																6:45 am
+															</small>
+														</div>
+														<span class="desc">Commented on file Guest list....</span>
+													</div>
+												</div>
+												<div class="p-3 d-flex border-bottom messages">
+													<div class="drop-img cover-image me-3"
+														data-bs-image-src="../static/img/faces/1.jpg">
+														<span class="avatar-status bg-teal"></span>
+													</div>
+													<div class="wd-90p">
+														<div class="d-flex">
+															<a href="chat.html">
+																<h6 class="mb-1 name">Peter Theil</h6>
+															</a>
+															<small class="text-muted ms-auto text-end">
+																6:45 am
+															</small>
+														</div>
+														<span class="desc">Brizid is in the Warehouse...</span>
+													</div>
+												</div>
+												<div class="p-3 d-flex border-bottom messages">
+													<div class="drop-img cover-image me-3"
+														data-bs-image-src="../static/img/faces/15.jpg">
+														<span class="avatar-status bg-teal"></span>
+													</div>
+													<div class="wd-90p">
+														<div class="d-flex">
+															<a href="chat.html">
+																<h6 class="mb-1 name">John vally</h6>
+															</a>
+															<small class="text-muted ms-auto text-end">
+																6:45 am
+															</small>
+														</div>
+														<span class="desc">New Product Realease......</span>
+													</div>
+												</div>
+												<div class="p-3 d-flex border-bottom messages">
+													<div class="drop-img cover-image me-3"
+														data-bs-image-src="../static/img/faces/13.jpg">
+														<span class="avatar-status bg-teal"></span>
+													</div>
+													<div class="wd-90p">
+														<div class="d-flex">
+															<a href="chat.html">
+																<h6 class="mb-1 name">Alzibeth Wrme</h6>
+															</a>
+															<small class="text-muted ms-auto text-end">
+																6:45 am
+															</small>
+														</div>
+														<span class="desc">Commented on file Guest list....</span>
+													</div>
+												</div>
+												<div class="p-3 d-flex border-bottom messages">
+													<div class="drop-img cover-image me-3"
+														data-bs-image-src="../static/img/faces/7.jpg">
+														<span class="avatar-status bg-teal"></span>
+													</div>
+													<div class="wd-90p">
+														<div class="d-flex">
+															<a href="chat.html">
+																<h6 class="mb-1 name">Samonu Show</h6>
+															</a>
+															<small class="text-muted ms-auto text-end">
+																6:45 am
+															</small>
+														</div>
+														<span class="desc">New Meetup Started......</span>
+													</div>
+												</div>
+											</div>
+											<div class="text-center dropdown-footer">
+												<a href="chat.html">VIEW ALL</a>
+											</div>
+										</div>
+									</li>
+									<li class="dropdown nav-item main-header-notification">
+										<a class="new nav-link" href="javascript:void(0);">
+											<i class="bx bx-notification header-icon-svgs"></i><span
+												class="pulse"></span></a>
+										<div class="dropdown-menu">
+											<div class="menu-header-content border-bottom text-start">
+												<div class="d-flex">
+													<h5 class="dropdown-title mb-1 fw-semibold">
+														Notifications
+													</h5>
+													<a href="javascript:void(0);"
+														class="badge rounded-pill bg-success ms-auto my-auto float-end">Mark
+														All Read</a>
+												</div>
+											</div>
+											<div class="main-notification-list Notification-scroll">
+												<a class="d-flex p-3 border-bottom" href="mail.html">
+													<div class="notifyimg bg-primary-transparent">
+														<i class="bx bx-duplicate text-primary"></i>
+													</div>
+													<div class="ms-3">
+														<h5 class="notification-label mb-1">
+															Updates Available
+														</h5>
+														<div class="notification-subtext">2 days ago</div>
+													</div>
+													<div class="ms-auto">
+														<i class="las la-angle-right text-end text-muted"></i>
+													</div>
+												</a>
+												<a class="d-flex p-3 border-bottom" href="mail.html">
+													<div class="notifyimg bg-pink-transparent">
+														<i class="bx bx-folder-open text-pink"></i>
+													</div>
+													<div class="ms-3">
+														<h5 class="notification-label mb-1">
+															New files available
+														</h5>
+														<div class="notification-subtext">
+															10 hour ago
+														</div>
+													</div>
+													<div class="ms-auto">
+														<i class="las la-angle-right text-end text-muted"></i>
+													</div>
+												</a>
+												<a class="d-flex p-3 border-bottom" href="mail.html">
+													<div class="notifyimg bg-success-transparent">
+														<i class="bx bx-cart text-success"></i>
+													</div>
+													<div class="ms-3">
+														<h5 class="notification-label mb-1">
+															New Order Received
+														</h5>
+														<div class="notification-subtext">1 hour ago</div>
+													</div>
+													<div class="ms-auto">
+														<i class="las la-angle-right text-end text-muted"></i>
+													</div>
+												</a>
+												<a class="d-flex p-3 border-bottom" href="mail.html">
+													<div class="notifyimg bg-warning-transparent">
+														<i class="bx bx-envelope text-warning"></i>
+													</div>
+													<div class="ms-3">
+														<h5 class="notification-label mb-1">
+															New review received
+														</h5>
+														<div class="notification-subtext">1 day ago</div>
+													</div>
+													<div class="ms-auto">
+														<i class="las la-angle-right text-end text-muted"></i>
+													</div>
+												</a>
+												<a class="d-flex p-3 border-bottom" href="mail.html">
+													<div class="notifyimg bg-danger-transparent">
+														<i class="bx bx-file text-danger"></i>
+													</div>
+													<div class="ms-3">
+														<h5 class="notification-label mb-1">
+															2 verified registrations
+														</h5>
+														<div class="notification-subtext">2 hour ago</div>
+													</div>
+													<div class="ms-auto">
+														<i class="las la-angle-right text-end text-muted"></i>
+													</div>
+												</a>
+											</div>
+											<div class="dropdown-footer">
+												<a href="mail.html">VIEW ALL</a>
+											</div>
+										</div>
+									</li>
+									<li class="nav-item full-screen fullscreen-button">
+										<a class="new nav-link full-screen-link" href="javascript:void(0);"><i
+												class="bx bx-fullscreen header-icon-svgs"></i></a>
+									</li>
+									<li class="dropdown main-profile-menu nav nav-item nav-link">
+										<a class="profile-user d-flex" href=""><img alt=""
+												src="../static/img/faces/9.jpg"></a>
+										<div class="dropdown-menu">
+											<div class="main-header-profile bg-primary border-bottom p-3">
+												<div class="d-flex wd-100p">
+													<div class="main-img-user">
+														<img alt="" src="../static/img/faces/9.jpg" class="">
+													</div>
+													<div class="ms-3 my-auto text-white">
+														{% if user %}
+														<h6>{{ user.business_name }}</h6>
+														<span>{{ user.first_name }} {{ user.last_name }}</span>
+														{% endif %}
+													</div>
+												</div>
+												
+											</div>
+											<a class="dropdown-item" href="{{ url_for('userprofile') }}"><i
+												class="bx bx-user-circle"></i>Profile</a>
+											<a class="dropdown-item" href="editprofile.html"><i class="bx bx-cog"></i>
+												Edit Profile</a>
+											
+											<a class="dropdown-item" href="settings.html"><i
+													class="bx bx-slider-alt"></i> Account Settings</a>
+											<a class="dropdown-item" href="logout"><i class="bx bx-log-out"></i>
+												Sign Out</a>
+										</div>
+									</li>
+									<li class="dropdown main-header-message right-toggle">
+										<a class="nav-link pe-0" data-bs-toggle="sidebar-right"
+											data-bs-target=".sidebar-right">
+											<i class="bx bx-dock-left header-icon-svgs"></i>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /main-header -->
+
+			<!-- main-sidebar -->
+			<div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+			<div class="sticky">
+				<aside class="app-sidebar sidebar-scroll">
+					<div class="main-sidebar-header active">
+						<!-- Update the href attribute below with the URL of your dashboard page -->
+						<a class="desktop-logo logo-light active" href="{{ url_for('dashboard') }}">
+							<img src="../static/img/brand/logo.png" class="main-logo" alt="logo">
+						</a>
+						<a class="desktop-logo logo-dark active" href="{{ url_for('dashboard') }}">
+							<img src="../static/img/brand/logo-light.png" class="main-logo" alt="logo">
+						</a>
+						<a class="logo-icon mobile-logo icon-light active" href="{{ url_for('dashboard') }}">
+							<img src="../static/img/brand/favicon.png" alt="logo">
+						</a>
+						<a class="logo-icon mobile-logo icon-dark active" href="{{ url_for('dashboard') }}">
+							<img src="../static/img/brand/favicon-light.png" alt="logo">
+						</a>
+					</div>
+					<div class="main-sidemenu">
+						<div class="slide-left disabled" id="slide-left">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"
+								viewBox="0 0 24 24">
+								<path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
+							</svg>
+						</div>
+						<ul class="side-menu">
+							<li class="side-item side-item-category">My Accounts</li>
+
+							<li class="slide">
+								<a class="side-menu__item" href="{{ url_for('dashboard') }}">
+									<i class="bx bx-desktop side-menu__icon"></i>
+									<span class="side-menu__label">Dashboard</span>
+								</a>
+							</li>
+							
+							<li class="side-item side-item-category">MENU</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+										class="bx bx-hourglass side-menu__icon"></i><span
+										class="side-menu__label">Customer's</span><i
+										class="angle fe fe-chevron-down"></i></a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu">
+												<!-- Tabs -->
+												<ul class="nav panel-tabs">
+													<li>
+														<a href="#side23" class="active" data-bs-toggle="tab"><i
+																class="fe fe-airplay"></i>
+															<p>Home</p>
+														</a>
+													</li>
+													<li>
+														<a href="#side24" data-bs-toggle="tab"><i
+																class="fe fe-package"></i>
+															<p>Events</p>
+														</a>
+													</li>
+													<li>
+														<a href="#side25" data-bs-toggle="tab"><i
+																class="fe fe-move"></i>
+															<p>Activity</p>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane tab-content-show active" id="side23">
+													<ul class="sidemenu-list">
+														<li class="side-menu__label1">
+															<a href="javascript:void(0);">Advanced Ui</a>
+														</li>
+														<li>
+															<a class="slide-item" href="{{ url_for('customers_list') }}">Customer</a>
+														</li>
+														<li>
+															<a class="slide-item" href="{{ url_for('customer_leads_list') }}">Leads</a>
+														</li>
+														
+													</ul>
+												</div>
+												<div class="tab-pane tab-content-double" id="side24">
+													<h5 class="mt-3 mb-4 tx-16">Events</h5>
+													<div class="latest-timeline">
+														<div class="timeline">
+															<div class="mt-0 event-text">
+																<h6 class="mb-0">
+																	<a target="_blank" href="#"
+																		class="timeline-head">Employees Meeting</a>
+																</h6>
+																<small class="text-muted mb-2">20 Feb, 2019</small>
+																<p class="tx-13">
+																	sed do eiusmod tempor incididunt ut labore
+																	et.
+																</p>
+															</div>
+															<div class="event-text">
+																<h6 class="mb-0">
+																	<a href="#" class="timeline-head">Anniversary
+																		Celebration</a>
+																</h6>
+																<small class="mb-2 text-muted">14 Feb, 2019</small>
+																<p class="tx-13">
+																	sed do eiusmod tempor magna aliqua nisi ut.
+																</p>
+															</div>
+															<div class="event-text">
+																<h6 class="mb-0">
+																	<a href="#" class="timeline-head">Best Employee
+																		Announcement</a>
+																</h6>
+																<small class="mb-2 text-muted">13 Feb, 2019</small>
+																<p class="tx-13">
+																	sed do eiusmod tempor incididunt ut aliquip.
+																</p>
+															</div>
+															<div class="event-text">
+																<h6 class="mb-0">
+																	<a href="#" class="timeline-head">Weekend trip</a>
+																</h6>
+																<small class="mb-2 text-muted">11 Feb, 2019</small>
+																<p class="tx-13">
+																	sed do eiusmod tempor incididunt ut aliquip.
+																</p>
+															</div>
+															<div class="event-text">
+																<h6 class="mb-0">
+																	<a href="#" class="timeline-head">New Project
+																		Started..</a>
+																</h6>
+																<small class="mb-2 text-muted">09 Feb, 2019</small>
+																<p class="tx-13">
+																	sed do eiusmod tempor incididunt ut aliquip.
+																</p>
+															</div>
+															<div class="mb-0 event-text">
+																<h6 class="mb-0">
+																	<a href="#" class="timeline-head">Gradening
+																		working</a>
+																</h6>
+																<small class="mb-2 text-muted">02 Feb, 2019</small>
+																<p class="tx-13">
+																	sed do eiusmod tempor aliqua nisi ut
+																	aliquip.
+																</p>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane tab-content-double" id="side25">
+													<h5 class="mt-3 mb-4 tx-16">Activity</h5>
+													<div class="activity mt-3 p-0">
+														<img src="../static/img/faces/8.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Samantha Melon</b> Add a new projects
+																	<b> AngularJS Template</b>
+																</p>
+																<small class="text-muted">30 mins ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/5.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Allie Grater</b> Add a new projects
+																	<b>Free HTML Template</b>
+																</p>
+																<small class="text-muted">1 days ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/6.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Gabe Lackmen</b> Add a new projects
+																	<b>Free PSD Template</b>
+																</p>
+																<small class="text-muted">3 days ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/7.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Abigail John</b> Add a new projects
+																	<b>Free UI Template</b>
+																</p>
+																<small class="text-muted">5 days ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/14.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Jiggel mossin</b> Add a new projects
+																	<b> AngularJS Template</b>
+																</p>
+																<small class="text-muted">30 mins ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/3.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Raven Chanan</b> Add a new projects
+																	<b>Free HTML Template</b>
+																</p>
+																<small class="text-muted">1 days ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/1.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Anna Ogden</b> Add a new projects
+																	<b>Free PSD Template</b>
+																</p>
+																<small class="text-muted">3 days ago</small>
+															</div>
+														</div>
+														<img src="../static/img/faces/11.jpg" alt=""
+															class="img-activity">
+														<div class="time-activity">
+															<div class="item-activity">
+																<p class="mb-0 tx-13">
+																	<b>Allie Grater</b> Add a new projects
+																	<b>Free UI Template</b>
+																</p>
+																<small class="text-muted">5 days ago</small>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</li>
+							
+							<li class="side-item side-item-category">Settings</li>
+							<li class="slide">
+								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
+										class="bx bx-file side-menu__icon"></i><span
+										class="side-menu__label">Users</span><i
+										class="angle fe fe-chevron-down"></i></a>
+								<ul class="slide-menu">
+									<li class="panel sidetab-menu">
+										<div class="tab-menu-heading p-0 pb-2 border-0">
+											<div class="tabs-menu">
+												<!-- Tabs -->
+												<ul class="nav panel-tabs">
+													<li>
+														<a href="#side38" class="active" data-bs-toggle="tab"><i
+																class="fe fe-airplay"></i>
+															<p>Home</p>
+														</a>
+													</li>
+													<li>
+														<a href="#side39" data-bs-toggle="tab"><i
+																class="fe fe-package"></i>
+															<p>Events</p>
+														</a>
+													</li>
+													<li>
+														<a href="#side40" data-bs-toggle="tab"><i
+																class="fe fe-move"></i>
+															<p>Activity</p>
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="panel-body tabs-menu-body p-0 border-0">
+											<div class="tab-content">
+												<div class="tab-pane tab-content-show active" id="side38">
+													<ul class="sidemenu-list">
+														<li class="side-menu__label1">
+															<a href="javascript:void(0);">Pages</a>
+														</li>
+														<li>
+															<a class="slide-item" href="{{ url_for('register_subuser')}}">Create User</a>
+														</li>
+														<li>
+														<li>
+															<a class="slide-item" href="{{ url_for('userlist') }}">User list</a>
+														</li>
+															
+														<li>
+															<a class="slide-item" href="{{ url_for('agentlist') }}">Agent list</a>
+														</li>
+														
+												</div>
+												
+										</div>
+									</li>
+								</ul>
+							</li>
+							
+						</ul>
+						<div class="slide-right" id="slide-right">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"
+								viewBox="0 0 24 24">
+								<path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
+							</svg>
+						</div>
+					</div>
+				</aside>
+			</div>
+			<!-- main-sidebar -->
+
+		</div>
+
+		<!-- main-content -->
+		<div class="main-content app-content">
+
+			<!-- container -->
+			<div class="main-container container-fluid">
+				<div class="p-3 header-secondary row">
+					<div class="col">
+						<div class="d-flex">
+							<a class="btn btn-danger" href="#"><i class="fe fe-rotate-cw me-1 mt-1"></i> Upgrade </a>
+						</div>
+					
+					</div>
+				</div>
+
+			>
+				{% block content %}{% endblock %}
+				<!-- row -->
+				<div class="row">
+
+				</div>
+				<!-- row closed -->
+			</div>
+			<!-- Container closed -->
+		</div>
+		<!-- main-content closed -->
+
+		<!-- sidebar-right-->
+		<div class="sidebar sidebar-right sidebar-animate">
+			<div class="panel panel-primary card mb-0 box-shadow">
+				<div class="tab-menu-heading border-0 p-3">
+					<div class="card-title mb-0">Notifications</div>
+					<div class="card-options ms-auto">
+						<a href="javascript:void(0);" class="sidebar-remove"><i class="fe fe-x"></i></a>
+					</div>
+				</div>
+				<div class="panel-body tabs-menu-body latest-tasks p-0 border-0">
+					<div class="tabs-menu ">
+						<!-- Tabs -->
+						<ul class="nav panel-tabs">
+							<li class=""><a href="#side1" class="active" data-bs-toggle="tab"><i
+										class="fe fe-message-circle tx-15 me-2"></i> Chat</a></li>
+							<li><a href="#side2" data-bs-toggle="tab"><i class="fe fe-bell tx-15 me-2"></i>
+									Notifications</a></li>
+							<li><a href="#side3" data-bs-toggle="tab"><i class="fe fe-users tx-15 me-2"></i> Friends</a>
+							</li>
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div class="tab-pane active " id="side1">
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-primary brround avatar-md">CH</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>New Websites is Created</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">30 mins ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-danger brround avatar-md">N</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Prepare For the Next Project</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">2 hours ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-info brround avatar-md">S</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Decide the live Discussion</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">3 hours ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-warning brround avatar-md">K</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Meeting at 3:00 pm</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">4 hours ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-success brround avatar-md">R</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Prepare for Presentation</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">1 day ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-pink brround avatar-md">MS</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Prepare for Presentation</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">1 day ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center border-bottom p-3">
+								<div class="">
+									<span class="avatar bg-purple brround avatar-md">L</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Prepare for Presentation</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">45 minutes ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="list d-flex align-items-center p-3">
+								<div class="">
+									<span class="avatar bg-blue brround avatar-md">U</span>
+								</div>
+								<a class="wrapper w-100 ms-3" href="javascript:void(0);">
+									<p class="mb-0 d-flex ">
+										<b>Prepare for Presentation</b>
+									</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="d-flex align-items-center">
+											<i class="mdi mdi-clock text-muted me-1"></i>
+											<small class="text-muted ms-auto">2 days ago</small>
+											<p class="mb-0"></p>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="tab-pane  " id="side2">
+							<div class="list-group list-group-flush ">
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/12.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-3">
+										<strong>Madeleine</strong> Hey! there I' am available....
+										<div class="small text-muted">
+											3 hours ago
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/1.jpg"></span>
+									</div>
+									<div class="ms-3">
+										<strong>Anthony</strong> New product Launching...
+										<div class="small text-muted">
+											5 hour ago
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/2.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-3">
+										<strong>Olivia</strong> New Schedule Realease......
+										<div class="small text-muted">
+											45 minutes ago
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/8.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-3">
+										<strong>Madeleine</strong> Hey! there I' am available....
+										<div class="small text-muted">
+											3 hours ago
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/11.jpg"></span>
+									</div>
+									<div class="ms-3">
+										<strong>Anthony</strong> New product Launching...
+										<div class="small text-muted">
+											5 hour ago
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/6.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-3">
+										<strong>Olivia</strong> New Schedule Realease......
+										<div class="small text-muted">
+											45 minutes ago
+										</div>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-lg brround cover-image"
+											data-bs-image-src="../static/img/faces/9.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-3">
+										<strong>Olivia</strong> Hey! there I' am available....
+										<div class="small text-muted">
+											12 minutes ago
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane  " id="side3">
+							<div class="list-group list-group-flush ">
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/9.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Mozelle Belt</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/11.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Florinda Carasco</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/10.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Alina Bernier</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/2.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">Zula
+											Mclaughin</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/13.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Isidro Heide</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/12.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Mozelle Belt</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/4.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Florinda Carasco</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/7.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Alina Bernier</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/2.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">Zula
+											Mclaughin</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/14.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Isidro Heide</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/11.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Florinda Carasco</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/9.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Alina Bernier</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/15.jpg"><span
+												class="avatar-status bg-success"></span></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">Zula
+											Mclaughin</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+								<div class="list-group-item d-flex  align-items-center">
+									<div>
+										<span class="avatar avatar-md brround cover-image"
+											data-bs-image-src="../static/img/faces/4.jpg"></span>
+									</div>
+									<div class="ms-2">
+										<div class="fw-semibold" data-bs-toggle="modal" data-bs-target="#chatmodel">
+											Isidro Heide</div>
+									</div>
+									<div class="ms-auto">
+										<a href="javascript:void(0);" class="btn btn-sm btn-light"
+											data-bs-toggle="modal" data-bs-target="#chatmodel"><i
+												class="fa fa-facebook"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/Sidebar-right-->
+
+		<!-- Message Modal -->
+		<div class="modal fade" id="chatmodel" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-right chatbox" role="document">
+				<div class="modal-content chat border-0">
+					<div class="card overflow-hidden mb-0 border-0">
+						<!-- action-header -->
+						<div class="action-header clearfix">
+							<div class="float-start hidden-xs d-flex ms-2">
+								<div class="img_cont me-3">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img" alt="img">
+								</div>
+								<div class="align-items-center mt-2">
+									<h4 class="text-white mb-0 fw-semibold">Daneil Scott</h4>
+									<span class="dot-label bg-success"></span><span
+										class="me-3 text-white">online</span>
+								</div>
+							</div>
+							<ul class="ah-actions actions align-items-center">
+								<li class="call-icon">
+									<a href="" class="d-done d-md-block phone-button" data-bs-toggle="modal"
+										data-bs-target="#audiomodal">
+										<i class="si si-phone"></i>
+									</a>
+								</li>
+								<li class="video-icon">
+									<a href="" class="d-done d-md-block phone-button" data-bs-toggle="modal"
+										data-bs-target="#videomodal">
+										<i class="si si-camrecorder"></i>
+									</a>
+								</li>
+								<li class="dropdown">
+									<a href="" data-bs-toggle="dropdown" aria-expanded="true">
+										<i class="si si-options-vertical"></i>
+									</a>
+									<ul class="dropdown-menu dropdown-menu-end">
+										<li><i class="fa fa-user-circle"></i> View profile</li>
+										<li><i class="fa fa-users"></i>Add friends</li>
+										<li><i class="fa fa-plus"></i> Add to group</li>
+										<li><i class="fa fa-ban"></i> Block</li>
+									</ul>
+								</li>
+								<li>
+									<a href="" class="" data-bs-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true"><i class="si si-close text-white"></i></span>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<!-- action-header end -->
+
+						<!-- msg_card_body -->
+						<div class="card-body msg_card_body">
+							<div class="chat-box-single-line">
+								<abbr class="timestamp">February 1st, 2019</abbr>
+							</div>
+							<div class="d-flex justify-content-start">
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+								<div class="msg_cotainer">
+									Hi, how are you Jenna Side?
+									<span class="msg_time">8:40 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end ">
+								<div class="msg_cotainer_send">
+									Hi Connor Paige i am good tnx how about you?
+									<span class="msg_time_send">8:55 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/9.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start ">
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+								<div class="msg_cotainer">
+									I am good too, thank you for your chat template
+									<span class="msg_time">9:00 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end ">
+								<div class="msg_cotainer_send">
+									You welcome Connor Paige
+									<span class="msg_time_send">9:05 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/9.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start ">
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+								<div class="msg_cotainer">
+									Yo, Can you update Views?
+									<span class="msg_time">9:07 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									But I must explain to you how all this mistaken born and I will give
+									<span class="msg_time_send">9:10 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/9.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start ">
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+								<div class="msg_cotainer">
+									Yo, Can you update Views?
+									<span class="msg_time">9:07 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									But I must explain to you how all this mistaken born and I will give
+									<span class="msg_time_send">9:10 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/9.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start ">
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+								<div class="msg_cotainer">
+									Yo, Can you update Views?
+									<span class="msg_time">9:07 AM, Today</span>
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_cotainer_send">
+									But I must explain to you how all this mistaken born and I will give
+									<span class="msg_time_send">9:10 AM, Today</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/9.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+							</div>
+							<div class="d-flex justify-content-start">
+								<div class="img_cont_msg">
+									<img src="../static/img/faces/6.jpg" class="rounded-circle user_img_msg" alt="img">
+								</div>
+								<div class="msg_cotainer">
+									Okay Bye, text you later..
+									<span class="msg_time">9:12 AM, Today</span>
+								</div>
+							</div>
+						</div>
+						<!-- msg_card_body end -->
+						<!-- card-footer -->
+						<div class="card-footer">
+							<div class="msb-reply d-flex">
+								<div class="input-group">
+									<input type="text" class="form-control " placeholder="Typing....">
+									<div class="input-group-text bg-transparent border-0 p-0">
+										<button type="button" class="btn btn-primary ">
+											<i class="fa fa-paper-plane" aria-hidden="true"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- card-footer end -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Video Modal -->
+		<div id="videomodal" class="modal fade">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content bg-dark border-0 text-white">
+					<div class="modal-body mx-auto text-center p-5">
+						<h5>Hogo Video call</h5>
+						<img src="../static/img/faces/6.jpg" class="rounded-circle user-img-circle h-8 w-8 mt-4 mb-3"
+							alt="img">
+						<h4 class="mb-1 fw-semibold">Daneil Scott</h4>
+						<h6 class="loading">Calling...</h6>
+						<div class="mt-5">
+							<div class="row">
+								<div class="col-4">
+									<a class="icon icon-shape rounded-circle mb-0" href="javascript:void(0);">
+										<i class="fa fa-video-camera"></i>
+									</a>
+								</div>
+								<div class="col-4">
+									<a class="icon icon-shape rounded-circle text-white mb-0" href="javascript:void(0);"
+										data-bs-dismiss="modal" aria-label="Close">
+										<i class="fa fa-phone bg-danger text-white"></i>
+									</a>
+								</div>
+								<div class="col-4">
+									<a class="icon icon-shape rounded-circle mb-0" href="javascript:void(0);">
+										<i class="fa fa-microphone-slash"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div><!-- modal-body -->
+				</div>
+			</div><!-- modal-dialog -->
+		</div><!-- modal -->
+
+		<!-- Audio Modal -->
+		<div id="audiomodal" class="modal fade">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content border-0">
+					<div class="modal-body mx-auto text-center p-5">
+						<h5>Hogo Voice call</h5>
+						<img src="../static/img/faces/6.jpg" class="rounded-circle user-img-circle h-8 w-8 mt-4 mb-3"
+							alt="img">
+						<h4 class="mb-1  fw-semibold">Daneil Scott</h4>
+						<h6 class="loading">Calling...</h6>
+						<div class="mt-5">
+							<div class="row">
+								<div class="col-4">
+									<a class="icon icon-shape rounded-circle mb-0" href="javascript:void(0);">
+										<i class="fa fa-volume-up bg-light text-dark"></i>
+									</a>
+								</div>
+								<div class="col-4">
+									<a class="icon icon-shape rounded-circle text-white mb-0" href="javascript:void(0);"
+										data-bs-dismiss="modal" aria-label="Close">
+										<i class="fa fa-phone text-white bg-success"></i>
+									</a>
+								</div>
+								<div class="col-4">
+									<a class="icon icon-shape rounded-circle mb-0" href="javascript:void(0);">
+										<i class="fa fa-microphone-slash bg-light text-dark"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div><!-- modal-body -->
+				</div>
+			</div><!-- modal-dialog -->
+		</div><!-- modal -->
+		<div class="content">
+			
+		</div>
+		<!-- Footer opened -->
+		<div class="main-footer">
+			<div class="container-fluid pd-t-0 ht-100p">
+				<span> Copyright © 2023 <a href="javascript:void(0);" class="text-primary">Hogo</a>. Designed with <span
+						class="fa fa-heart text-danger"></span> by <a href="javascript:void(0);"> Spruko </a> All rights
+					reserved.</span>
+			</div>
+		</div>
+		<!-- Footer closed -->
+
+	</div>
+	<!-- End Page -->
+
+
+
+	<!-- Include jQuery first -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	
+
+
+	<!-- Include other scripts -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.0/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/intlTelInput.js"></script>
+
+	<!-- Your letter.js script -->
+	<script src="{{ url_for('static', filename='js/letter.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/forms.js') }}"></script>
+
+	<!-- JQuery min js -->
+	<script src="../static/plugins/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Bundle js -->
+	<script src="../static/plugins/bootstrap/js/popper.min.js"></script>
+	<script src="../static/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Moment js -->
+	<script src="../static/plugins/moment/moment.js"></script>
+
+	<!-- Daterangepicker js-->
+	<script src="../static/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+	<!-- P-scroll js -->
+	<script src="../static/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="../static/plugins/perfect-scrollbar/p-scroll.js"></script>
+
+	<!-- Sidebar js -->
+	<script src="../static/plugins/side-menu/sidemenu.js"></script>
+
+	<!-- Right-sidebar js -->
+	<script src="../static/plugins/sidebar/sidebar.js"></script>
+	<script src="../static/plugins/sidebar/sidebar-custom.js"></script>
+
+	<!-- Sticky js -->
+	<script src="../static/js/sticky.js"></script>
+
+	<!-- eva-icons js -->
+	<script src="../static/js/eva-icons.min.js"></script>
+
+	<!-- switcher-styles js -->
+	<script src="../static/js/swither-styles.js"></script>
+
+	<!--themecolor js-->
+	<script src="../static/js/themecolor.js"></script>
+
+	<!-- custom js -->
+	<script src="../static/js/custom.js"></script>
+
+</body>
+
+</html>

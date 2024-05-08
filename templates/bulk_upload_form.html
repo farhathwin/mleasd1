@@ -1,0 +1,15 @@
+<!-- bulk_upload_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Upload Customers</h2>
+    <form action="{{ url_for('bulk_upload') }}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label">Select Excel file (.xlsx):</label>
+            <input type="file" class="form-control" id="file" name="file" accept=".xlsx" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+
+    <div class="container">
+        <h1>Registration Confirmation</h1>
+        <p>Thank you for registering! Please verify your email address by entering the OTP (One-Time Password) sent to your email:</p>
+        <form action="{{ url_for('handle_confirmation', token=token) }}" method="post">
+            <div class="form-group">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" required>
+            </div>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+
