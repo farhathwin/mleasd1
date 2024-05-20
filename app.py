@@ -7,7 +7,7 @@ import random , openpyxl
 import os , logging
 from user_data_module import fetch_user_data ,fetch_agent_data ,fetch_agent_by_id , fetch_user_by_id
 from datetime import timedelta , datetime
-from sqlalchemy import create_engine , func 
+from sqlalchemy import create_engine , func , and_
 import logging , uuid
 from sqlalchemy import text
 from send_registration_email import send_registration_email 
@@ -977,6 +977,7 @@ def customer_create():
         return redirect(url_for('login'))
 
     company_id = session['company_id']
+
     user_id = session['user_id']
 
     if request.method == 'POST':
@@ -1187,13 +1188,22 @@ def update_leads(lead_id):
         flash('Please log in again.', 'warning')
         return redirect(url_for('login'))
 
-    company_id = session['company_id']
     user_id = session['user_id']
+    company_id = session['company_id']
 
-    lead = Lead.query.filter_by(lead_id=lead_id, company_id=company_id).first()
+    # Fetch the lead with an explicit join to Customer, specifying the join condition
+    lead = Lead.query \
+        .join(Customer, and_(Lead.customer_id == Customer.customer_id, Customer.company_id == company_id)) \
+        .filter(Lead.lead_id == lead_id, Lead.company_id == company_id) \
+        .options(joinedload(Lead.customer)) \
+        .first()
+
     if not lead:
         flash('No lead found or you do not have permission to view this lead.', 'danger')
         return redirect(url_for('dashboard'))
+
+    if lead.customer:
+        print(f"Customer Loaded: ID {lead.customer.customer_id}, Company ID {lead.customer.company_id}")
 
     if request.method == 'POST':
         comment_text = request.form.get('comment')
@@ -1208,24 +1218,62 @@ def update_leads(lead_id):
             comment=comment_text,
             created_at=datetime.utcnow()
         )
-        
-        try:
-            db.session.add(new_comment)
-            db.session.commit()
-            flash('Comment added to lead successfully.', 'success')
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error adding comment: {e}', 'danger')
+        db.session.add(new_comment)
+        db.session.commit()
+        flash('Comment added to lead successfully.', 'success')
         return redirect(url_for('update_leads', lead_id=lead_id))
 
-    comments = CustomerComment.query.filter(
-        CustomerComment.lead_id == lead.lead_id,
-        CustomerComment.company_id == company_id  # Ensure comments are filtered by company_id
-    ).order_by(CustomerComment.created_at.desc()).all()
+    
+    #print(f"Attempting to fetch comments for lead_id: {lead_id} and company_id: {company_id}")
 
-    customer = lead.customer if lead.customer else None
+    # Test fetching all comments for Lead ID to see if any exist at all
+    
 
-    return render_template('update_lead.html', lead=lead, customer=customer, comments=comments)
+    comments = CustomerComment.query \
+        .join(User, and_(CustomerComment.created_by == User.user_id, User.company_id == company_id)) \
+        .filter(
+            CustomerComment.lead_id == lead.lead_id,
+            CustomerComment.company_id == company_id  # This ensures comments are linked to the correct company
+        ) \
+        .order_by(CustomerComment.created_at.desc()) \
+        .all()
+
+    # Define the query without executing it
+    query = CustomerComment.query \
+        .join(User, and_(CustomerComment.created_by == User.user_id, User.company_id == company_id)) \
+        .filter(
+            CustomerComment.lead_id == lead.lead_id,
+            CustomerComment.company_id == company_id
+        ) \
+        .order_by(CustomerComment.created_at.desc())
+
+    # Print the raw SQL query
+    print(str(query.statement.compile(compile_kwargs={"literal_binds": True})))
+
+    # Now execute the query to get the results
+    comments = query.all()
+
+    # You can now iterate over comments or pass them to your template
+    print(f"Comments found: {len(comments)}")
+    for comment in comments:
+        print(f"Comment ID: {comment.id}, Posted by User ID: {comment.created_by}, User's Company ID: {comment.user.company_id}")
+
+    print(f"Filtered Comments: {len(comments)}")
+    for comment in comments:
+        print(f"Comment by {comment.user.first_name}: {comment.comment}")   
+
+
+    print(f"Comments found: {len(comments)}")
+    for comment in comments:
+        print(f"Comment ID: {comment.id}, Posted by User ID: {comment.created_by}, User's Company ID: {comment.company_id}")
+
+    return render_template('update_lead.html', lead=lead, customer=lead.customer, comments=comments)
+
+
+
+
+
+
 
 
 @app.route('/create-leads', methods=['GET', 'POST'])

@@ -194,7 +194,7 @@ class Lead(db.Model):
     lead_type = db.Column(db.String(50), nullable=True)
     marketing_type = db.Column(db.String(50), nullable=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
-    customer = db.relationship('Customer', backref=db.backref('leads', lazy=True))
+    customer = db.relationship('Customer', foreign_keys=[customer_id], backref='leads')
 
     @staticmethod
     def generate_lead_id(company_id):
