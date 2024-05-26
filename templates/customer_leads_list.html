@@ -11,7 +11,21 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="card-title mb-0">Customer Leads</h6>
-                <div>
+                <div class="d-flex">
+                    <!-- User Filter Dropdown -->
+                    <form method="GET" action="{{ url_for('customer_leads_list') }}" class="mr-2">
+                        <div class="form-group mb-0">
+                            <select name="user_filter" id="user_filter" class="form-control" onchange="this.form.submit()">
+                                <option value="all">All Users</option>
+                                {% for user in users %}
+                                <option value="{{ user.id }}" {{ 'selected' if request.args.get('user_filter')|string == user.id|string else '' }}>
+                                    {{ user.first_name }} {{ user.last_name }}
+                                </option>
+                                
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
                     <!-- Button to create new leads -->
                     <a href="{{ url_for('create_leads') }}" class="btn btn-primary">Create New Leads</a>
                 </div>
@@ -35,9 +49,9 @@
                                 <tr>
                                     <td><input type="checkbox" name="selected_leads" value="{{ lead.id }}"></td>
                                     <td>{{ lead.lead_id }}</td>
-                                    <td>{{ lead.customer.full_name }}</td>
-                                    <td>{{ lead.customer.phone_no }}</td>
-                                    <td>{{ lead.customer.email }}</td>
+                                    <td>{{ lead.customer.full_name if lead.customer else 'No Customer' }}</td>
+                                    <td>{{ lead.customer.phone_no if lead.customer else 'N/A' }}</td>
+                                    <td>{{ lead.customer.email if lead.customer else 'N/A' }}</td>
                                     <td>
                                         <a href="{{ url_for('update_leads', lead_id=lead.lead_id) }}" class="btn btn-sm btn-info">View</a>
                                     </td>

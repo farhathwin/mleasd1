@@ -16,7 +16,7 @@ from PIL import Image
 from werkzeug.utils import secure_filename
 from flask_migrate import Migrate
 from functools import wraps
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload , aliased
 
 
 UPLOAD_FOLDER = 'D:/Mleasd New- Project Farhath 07-10-23/static/img'
@@ -1134,7 +1134,7 @@ def customers_list():
         flash('Please log in to access the user list.', 'danger')
         return redirect(url_for('login'))
 
-from sqlalchemy.orm import joinedload
+
 
 @app.route('/customer-leads-list', methods=['GET', 'POST'])
 def customer_leads_list():
@@ -1142,43 +1142,64 @@ def customer_leads_list():
         flash('Please log in again.', 'warning')
         return redirect(url_for('login'))
 
-    current_company_id = session['company_id']
+    company_id = session.get('company_id')  # Safer retrieval of company_id
+    user_filter = request.args.get('user_filter', 'all')
 
-    # Explicitly join Lead and Customer and filter by company_id for both.
-    leads = Lead.query \
-        .join(Customer, Lead.customer_id == Customer.customer_id) \
-        .filter(Lead.company_id == current_company_id,
-                Customer.company_id == current_company_id) \
-        .options(joinedload(Lead.customer)) \
-        .all()
+    try:
+        query = db.session.query(Lead).filter_by(company_id=company_id, is_leads=True)
+        if user_filter != 'all':
+            query = query.filter_by(user_id=user_filter)
 
-    users = User.query.filter_by(company_id=current_company_id).all()
+        leads = query.order_by(Lead.date.desc()).all()  # Sorted by last created (date)
+
+        # Fetch corresponding customers separately
+        customer_ids = [lead.customer_id for lead in leads if lead.customer_id]
+        customers = db.session.query(Customer).filter(Customer.customer_id.in_(customer_ids), Customer.company_id == company_id).all()
+
+        # Map customers to a dictionary where key is customer_id
+        customer_dict = {cust.customer_id: cust for cust in customers}
+
+        # Attach the correct customer objects to leads
+        for lead in leads:
+            if lead.customer_id in customer_dict:
+                lead.customer = customer_dict[lead.customer_id]
+            else:
+                lead.customer = None
+
+    except Exception as e:
+        flash(f'Error retrieving leads: {str(e)}', 'danger')
+        leads = []
+        
+    users = User.query.filter_by(company_id=company_id).all()
 
     if request.method == 'POST':
-        selected_leads = request.form.getlist('selected_leads')
-        target_user_id = request.form['target_user_id']
-        target_user = User.query.filter_by(id=target_user_id, company_id=current_company_id).first()
+            selected_leads = request.form.getlist('selected_leads')
+            target_user_id = request.form['target_user_id']
+            target_user = User.query.filter_by(id=target_user_id, company_id=company_id).first()
 
-        if not target_user:
-            flash('Invalid operation. User does not belong to your company.', 'danger')
+            if not target_user:
+                flash('Invalid operation. User does not belong to your company.', 'danger')
+                return redirect(url_for('customer_leads_list'))
+
+            for lead_id in selected_leads:
+                lead = Lead.query.filter_by(id=lead_id, company_id=company_id).first()
+                if lead:
+                    lead.user_id = target_user.id
+                    db.session.add(lead)
+
+            try:
+                db.session.commit()
+                flash('Leads transferred successfully.', 'success')
+            except Exception as e:
+                db.session.rollback()
+                flash(f'Error transferring leads: {e}', 'danger')
+
             return redirect(url_for('customer_leads_list'))
 
-        for lead_id in selected_leads:
-            lead = Lead.query.filter_by(id=lead_id, company_id=current_company_id).first()
-            if lead:
-                lead.user_id = target_user.id
-                db.session.add(lead)
-
-        try:
-            db.session.commit()
-            flash('Leads transferred successfully.', 'success')
-        except Exception as e:
-            db.session.rollback()
-            flash(f'Error transferring leads: {e}', 'danger')
-
-        return redirect(url_for('customer_leads_list'))
-
     return render_template('customer_leads_list.html', leads=leads, users=users)
+
+
+    
 
 
 
