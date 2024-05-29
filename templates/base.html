@@ -940,32 +940,29 @@
 
 		</div>
 
-		<!-- main-content -->
 		<div class="main-content app-content">
-
 			<!-- container -->
 			<div class="main-container container-fluid">
-				<div class="p-3 header-secondary row">
-					<div class="col">
-						<div class="d-flex">
-							<a class="btn btn-danger" href="#"><i class="fe fe-rotate-cw me-1 mt-1"></i> Upgrade </a>
-						</div>
-					
-					</div>
+				
+		
+				<!-- Block content with padding on top -->
+				<div style="padding-top: 20px;">
+					{% block content %}{% endblock %}
 				</div>
-
-			>
-				{% block content %}{% endblock %}
-				<!-- row -->
+				
+		
+				<!-- Row for additional content -->
 				<div class="row">
-
+					<!-- Additional rows can be added here if needed -->
 				</div>
-				<!-- row closed -->
+				<!-- Row closed -->
 			</div>
 			<!-- Container closed -->
 		</div>
+		
+		
 		<!-- main-content closed -->
-
+		
 		<!-- sidebar-right-->
 		<div class="sidebar sidebar-right sidebar-animate">
 			<div class="panel panel-primary card mb-0 box-shadow">

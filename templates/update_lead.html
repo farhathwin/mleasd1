@@ -1,37 +1,65 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="container">
-    <h2>Lead - ID: {{ lead.lead_id }}</h2>
-    <p>Debug - Customer Company ID: {{ customer.company_id if customer else 'No customer associated' }}</p>
-    <form method="POST" action="">
-        <div class="mb-3">
-            <label for="customerName">Customer Name</label>
-            <input type="text" id="customerName" value="{{ customer.full_name if customer else 'No Customer' }}" class="form-control" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="email">Email ID</label>
-            <input type="email" id="email" value="{{ customer.email if customer else 'No Email' }}" class="form-control" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="phoneNo">Phone No</label>
-            <input type="text" id="phoneNo" value="{{ customer.phone_no if customer else 'No Phone Number' }}" class="form-control" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="comment">Comment</label>
-            <textarea id="comment" name="comment" class="form-control"></textarea>
-        </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Update Comment</button>
-        </div>
-    </form>
+{% block title %}Update Leads | MLEASD.COM{% endblock %}
+{% block meta_description %}View and manage customer leads{% endblock %}
+{% block meta_author %}Your Name{% endblock %}
+{% block meta_keywords %}Customer Leads, Management{% endblock %}
 
-    {% for comment in comments %}
-    <div class="comment-box" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-        <p>{{ comment.comment }}</p>
-        <small>Posted by {{ comment.user.first_name }} {{ comment.company_id }} {{ comment.created_by }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+{% block content %}
+<div>
+    <!-- Lead ID Header with White Background -->
+    <div class="card mb-2">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Lead - ID: {{ lead.lead_id }}</h2>
+            <button onclick="window.history.back();" class="btn btn-outline-secondary">Back</button>
+        </div>
     </div>
-    {% endfor %}
+
+    <!-- Customer Details Card -->
+    <div class="card">
+        <div class="card-header">
+            Customer Details
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label for="customerName" class="form-label">Customer Name</label>
+                    <input type="text" id="customerName" value="{{ customer.full_name if customer else 'No Customer' }}" class="form-control" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email ID</label>
+                    <input type="email" id="email" value="{{ customer.email if customer else 'No Email' }}" class="form-control" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNo" class="form-label">Phone No</label>
+                    <input type="text" id="phoneNo" value="{{ customer.phone_no if customer else 'No Phone Number' }}" class="form-control" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Comment</label>
+                    <textarea id="comment" name="comment" class="form-control"></textarea>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Update Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    {% if comments %}
+    <div class="mt-4">
+        <h5>Comments:</h5>
+        {% for comment in comments %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <p class="mb-1">{{ comment.comment }}</p>
+                <small class="text-muted">Posted by {{ comment.user.first_name }} (User ID: {{ comment.created_by }}) on {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No comments to display.</p>
+    {% endif %}
 </div>
 {% endblock %}
-

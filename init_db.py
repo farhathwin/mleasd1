@@ -155,6 +155,8 @@ class Customer(db.Model):
     marketing_type = db.Column(db.String(50), nullable=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     user = db.relationship('User', backref=db.backref('customers', lazy=True))
+    __table_args__ = (db.UniqueConstraint('customer_id', 'company_id', name='_customer_company_uc'),)
+
 
     def __init__(self, full_name, email, phone_no, company_id, user_id, customer_id=None,
                  is_verified=False, is_leads=False, lead_type=None, marketing_type=None):
@@ -188,13 +190,16 @@ class Lead(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lead_id = db.Column(db.String(10), nullable=False)
     company_id = db.Column(db.String(10), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id') , nullable=False)
     customer_id = db.Column(db.String(10), db.ForeignKey('customer.customer_id', ondelete='SET NULL'), nullable=True)
     is_leads = db.Column(db.Boolean, default=True)
     lead_type = db.Column(db.String(50), nullable=True)
     marketing_type = db.Column(db.String(50), nullable=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     customer = db.relationship('Customer', foreign_keys=[customer_id], backref='leads')
+    user = db.relationship('User', backref='leads')
+    inquiry_type = db.Column(db.String(50), nullable=True)  # Add this line in your Lead model
+ 
 
     @staticmethod
     def generate_lead_id(company_id):
