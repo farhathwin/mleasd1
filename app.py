@@ -7,7 +7,7 @@ import random , openpyxl
 import os , logging
 from user_data_module import fetch_user_data ,fetch_agent_data ,fetch_agent_by_id , fetch_user_by_id
 from datetime import timedelta , datetime
-from sqlalchemy import create_engine , func , and_
+from sqlalchemy import create_engine , func , and_ , desc
 import logging , uuid
 from sqlalchemy import text
 from send_registration_email import send_registration_email 
@@ -1151,8 +1151,8 @@ def customer_leads_list():
     leads = None  # Initialize leads variable outside the try block
 
     try:
-        # Fetch leads data
-        leads = db.session.query(Lead).filter_by(company_id=company_id, is_leads=True).all()
+        # Fetch leads data sorted by creation date in descending order
+        leads = db.session.query(Lead).filter_by(company_id=company_id, is_leads=True).order_by(desc(Lead.date)).all()
 
         # Fetch corresponding customers separately
         customer_ids = [lead.customer_id for lead in leads if lead.customer_id]
@@ -1168,11 +1168,25 @@ def customer_leads_list():
             else:
                 lead.customer = None
 
+        # Load associated user details for each lead
+        # Fetch corresponding users for the filtered leads
+        user_ids = [lead.user_id for lead in leads]
+        users = db.session.query(User).filter(User.user_id.in_(user_ids), User.company_id == company_id).all()
+
+        # Map users to a dictionary where key is user_id
+        user_dict = {user.user_id: user for user in users}
+
+        # Attach the correct user objects to leads
+        for lead in leads:
+            if lead.user_id in user_dict:
+                lead.user = user_dict[lead.user_id]
+            else:
+                lead.user = None
+
         # Debugging output
         print('Leads:', [(lead.lead_id, lead.company_id, lead.customer.full_name if lead.customer else "No Customer") for lead in leads])
     except Exception as e:
         print(f'Error retrieving leads: {str(e)}')
-
 
     users = User.query.filter_by(company_id=company_id).all()
 
@@ -1181,8 +1195,7 @@ def customer_leads_list():
         lead = Lead.query.filter_by(id=selected_lead_id, company_id=company_id).first()
         if lead:
             # Store relevant lead and customer details in session
-            session['selected_lead_id'] = lead.lead_id
-            session['selected_customer_id'] = lead.customer_id
+            
             return redirect(url_for('update_leads', lead_id=lead.lead_id))
         else:
             flash('Selected lead not found.', 'danger')

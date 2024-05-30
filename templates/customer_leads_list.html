@@ -27,6 +27,8 @@
                                     <th>Customer Name</th>
                                     <th>Phone No</th>
                                     <th>Related</th>
+                                    <th>Created User</th>
+                                    <th>Created Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,7 +40,9 @@
                                             <td>{{ lead.lead_id }}</td>
                                             <td>{{ lead.customer.full_name }}</td>
                                             <td>{{ lead.customer.phone_no }}</td>
-                                            <td>{{ lead.inquiry_type }}</td>                          
+                                            <td>{{ lead.inquiry_type }}</td>
+                                            <td>{{ lead.user.first_name }} {{ lead.user.last_name }}</td>
+                                            <td>{{ lead.date.strftime('%Y-%m-%d') }}</td> <!-- Format the date as desired -->
                                             <td>
                                                 <a href="{{ url_for('update_leads', lead_id=lead.lead_id) }}" class="btn btn-sm btn-info">View</a>
                                             </td>
@@ -46,7 +50,7 @@
                                     {% endfor %}
                                 {% else %}
                                     <tr>
-                                        <td colspan="6">No leads found.</td>
+                                        <td colspan="8">No leads found.</td>
                                     </tr>
                                 {% endif %}
                             </tbody>
