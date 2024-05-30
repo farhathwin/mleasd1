@@ -1168,7 +1168,7 @@ def customer_leads_list():
             else:
                 lead.customer = None
 
-        # Load associated user details for each lead
+        
         # Fetch corresponding users for the filtered leads
         user_ids = [lead.user_id for lead in leads]
         users = db.session.query(User).filter(User.user_id.in_(user_ids), User.company_id == company_id).all()
@@ -1266,8 +1266,10 @@ def update_leads(lead_id):
         ) \
         .order_by(CustomerComment.created_at.desc()) \
         .all()
+    
 
     return render_template('update_lead.html', lead=lead, customer=lead.customer, comments=comments)
+
 
 
 
