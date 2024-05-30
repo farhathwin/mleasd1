@@ -192,7 +192,7 @@ class Lead(db.Model):
     company_id = db.Column(db.String(10), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id') , nullable=False)
     customer_id = db.Column(db.String(10), db.ForeignKey('customer.customer_id', ondelete='SET NULL'), nullable=True)
-    is_leads = db.Column(db.Boolean, default=True)
+    is_leads = db.Column(db.Integer, default=1)  # Default to 1 for 'In Progress'
     lead_type = db.Column(db.String(50), nullable=True)
     marketing_type = db.Column(db.String(50), nullable=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
