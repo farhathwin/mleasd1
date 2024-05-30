@@ -1148,6 +1148,8 @@ def customer_leads_list():
         flash('Company ID not found in session.', 'error')
         return redirect(url_for('login'))
 
+    leads = None  # Initialize leads variable outside the try block
+
     try:
         # Fetch leads data
         leads = db.session.query(Lead).filter_by(company_id=company_id, is_leads=True).all()
@@ -1186,6 +1188,7 @@ def customer_leads_list():
             flash('Selected lead not found.', 'danger')
 
     return render_template('customer_leads_list.html', leads=leads, users=users)
+
 
 
 
