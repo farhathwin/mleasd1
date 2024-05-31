@@ -52,7 +52,30 @@
         }
     </style>
 </head>
+
 <body>
+    <form id="filterForm" method="POST" action="{{ url_for('leads.leads_report') }}">
+        <div class="form-group">
+            <label for="selected_user_id">Filter by User:</label>
+            <select name="selected_user_id" id="selected_user_id" class="form-control">
+                <option value="">All Users</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}" {% if user.id == selected_user_id %}selected{% endif %}>{{ user.first_name }} {{ user.last_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+    
+    <div class="container">
+        <!-- Your lead dashboard content -->
+    </div>
+
+    <script>
+        document.getElementById('selected_user_id').addEventListener('change', function() {
+            document.getElementById('filterForm').submit();
+        });
+    </script>
+    
     <div class="container">
         <h1>Lead Dashboard</h1>
         <div class="lead-stats">
@@ -96,7 +119,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for lead in recent_leads %}
+                        {% for lead in leads %}
                         <tr>
                             <td>{{ lead.lead_id }}</td>
                             <td>{{ lead.customer_name }}</td>
@@ -109,5 +132,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('selected_user_id').addEventListener('change', function() {
+            document.getElementById('filterForm').submit();
+        });
+    </script>
 </body>
 </html>
