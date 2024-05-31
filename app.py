@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, redirect , url_for , flash , session , current_app , jsonify
+from flask import Flask, render_template, request, redirect , url_for , flash , session , current_app , jsonify , Blueprint
 from init_db import User, datetime , Agent , db ,Customer ,CustomerComment ,Lead    
 from config import SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, SENDER_PASSWORD
 from otp_sender import send_otp_email   
@@ -69,6 +69,7 @@ smtp_server = SMTP_SERVER
 smtp_port = SMTP_PORT
 sender_email = SENDER_EMAIL
 sender_password = SENDER_PASSWORD
+
 
 
 def get_user_id_somehow():
@@ -1262,14 +1263,6 @@ app.jinja_env.filters['status_label'] = status_label
 
 
 
-
-
-
-
-
-
-
-
 @app.route('/create-leads', methods=['GET', 'POST'])
 def create_leads():
     if 'user_id' not in session or 'company_id' not in session:
@@ -1340,7 +1333,33 @@ def check_db_connection():
         return f'Database connection error: {str(e)}', 500  
     
 
+leads_bp = Blueprint('leads', __name__)
+# Define the blueprint
+leads_bp = Blueprint('leads', __name__)
+
+# Define the route for the leads report
+@leads_bp.route('/leads-report')
+def leads_report():
+    # Fetch data for the lead dashboard from the database
+    total_leads = Lead.query.count()
+    converted_leads = Lead.query.filter_by(is_leads=0).count()
+    conversion_rate = (converted_leads / total_leads) * 100 if total_leads > 0 else 0
     
+    # Fetch lead breakdown by inquiry type
+    lead_breakdown = {}
+    leads_by_type = Lead.query.with_entities(Lead.inquiry_type, func.count()).group_by(Lead.inquiry_type).all()
+    for inquiry_type, count in leads_by_type:
+        lead_breakdown[inquiry_type] = count
+
+    # Fetch recent leads
+    recent_leads = Lead.query.order_by(Lead.date.desc()).limit(5).all()
+
+    return render_template('leadsreport.html', total_leads=total_leads, converted_leads=converted_leads,
+                           conversion_rate=conversion_rate, lead_breakdown=lead_breakdown,
+                           recent_leads=recent_leads)
+
+# Register the blueprint with the Flask application
+app.register_blueprint(leads_bp)
 
 
 if __name__ == "__main__":

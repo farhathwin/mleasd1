@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+        .card-title {
+            margin-top: 0;
+        }
+        .card-content {
+            margin-bottom: 10px;
+        }
+        .lead-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .lead-stat {
+            flex-basis: 30%;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .lead-stat h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lead Dashboard</h1>
+        <div class="lead-stats">
+            <div class="lead-stat">
+                <h3>Total Leads</h3>
+                <p>{{ total_leads }}</p>
+            </div>
+            <div class="lead-stat">
+                <h3>Converted Leads</h3>
+                <p>{{ converted_leads }}</p>
+            </div>
+            <div class="lead-stat">
+                <h3>Conversion Rate</h3>
+                <p>{{ conversion_rate }}%</p>
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">Lead Breakdown by Inquiry Type</h2>
+            <div class="card-content">
+                {% for inquiry_type, count in lead_breakdown.items() %}
+                <p>{{ inquiry_type }}: {{ count }} leads</p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">Lead Timeline</h2>
+            <div class="card-content">
+                <!-- Add a timeline chart here -->
+            </div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">Recent Leads</h2>
+            <div class="card-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lead ID</th>
+                            <th>Customer Name</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lead in recent_leads %}
+                        <tr>
+                            <td>{{ lead.lead_id }}</td>
+                            <td>{{ lead.customer_name }}</td>
+                            <td>{{ lead.status }}</td>
+                            <td>{{ lead.created_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
