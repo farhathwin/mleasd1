@@ -922,7 +922,8 @@ def verify(model_type):
                     business_name = user.business_name
                     session['business_name'] = business_name
                     
-                    print ('Versify Sesson ',company_id)
+                    print ('Session User_id ',user_id )
+                    print ('Verify Session Company_id ',company_id)
 
                     flash(f'{model_type.capitalize()} account verified!', 'success')
                     return redirect(url_for('dashboard'))  # Redirect to the dashboard after verification
@@ -1333,59 +1334,45 @@ def check_db_connection():
         return f'Database connection error: {str(e)}', 500  
     
 
-leads_bp = Blueprint('leads', __name__)
-# Define the blueprint
-leads_bp = Blueprint('leads', __name__)
-
-
 
 # Define the blueprint
 leads_bp = Blueprint('leads', __name__)
 
-# Define the route for the leads report
 @leads_bp.route('/leads-report', methods=['GET', 'POST'])
 def leads_report():
     if 'user_id' not in session or 'company_id' not in session:
-        return redirect(url_for('login'))  # Assuming you have a login route defined
-    
-    # Fetch the user ID from the session
-    user_id = session.get('user_id')
+        return redirect(url_for('login'))
+
     company_id = session.get('company_id')
-    
-    # Fetch data for the lead dashboard from the database
-    total_leads = Lead.query.filter_by(company_id=company_id).count()
-    converted_leads = Lead.query.filter_by(company_id=company_id, is_leads=0).count()
-    conversion_rate = (converted_leads / total_leads) * 100 if total_leads > 0 else 0
-    
-    # Fetch lead breakdown by inquiry type
-    lead_breakdown = {}
-    leads_by_type = Lead.query.with_entities(Lead.inquiry_type, func.count()).filter_by(company_id=company_id).group_by(Lead.inquiry_type).all()
-    for inquiry_type, count in leads_by_type:
-        lead_breakdown[inquiry_type] = count
-
-    # Fetch recent leads
-    recent_leads = Lead.query.filter_by(company_id=company_id).order_by(Lead.date.desc()).limit(5).all()
-
-    # Fetch users associated with the company for dropdown menu
     users = User.query.filter_by(company_id=company_id).all()
 
-    selected_user_id = None
-    if request.method == 'POST':
-        selected_user_id = int(request.form.get('selected_user_id'))
+    selected_user_id = request.form.get('selected_user_id', type=int) if request.method == 'POST' else None
+    recent_leads = []  # Initialize at the top to ensure it's always defined
 
-    # Filter leads by selected user, if any
     if selected_user_id:
-        leads = Lead.query.filter_by(company_id=company_id, user_id=selected_user_id).all()
+        query = Lead.query.filter_by(company_id=company_id, user_id=selected_user_id)
     else:
-        leads = Lead.query.filter_by(company_id=company_id).all()
+        query = Lead.query.filter_by(company_id=company_id)
+
+    leads = query.all()
+    total_leads = len(leads)
+    converted_leads = sum(1 for lead in leads if lead.is_leads == 0)
+    conversion_rate = (converted_leads / total_leads) * 100 if total_leads > 0 else 0
+
+    lead_breakdown = {}
+    for lead in leads:
+        if lead.inquiry_type in lead_breakdown:
+            lead_breakdown[lead.inquiry_type] += 1
+        else:
+            lead_breakdown[lead.inquiry_type] = 1
+
+    recent_leads = query.order_by(Lead.date.desc()).limit(5).all()
 
     return render_template('leadsreport.html', total_leads=total_leads, converted_leads=converted_leads,
                            conversion_rate=conversion_rate, lead_breakdown=lead_breakdown,
-                           recent_leads=recent_leads, users=users, selected_user_id=selected_user_id, leads=leads)
-
+                           recent_leads=recent_leads, users=users, selected_user_id=selected_user_id)
 # Register the blueprint with the Flask application
 app.register_blueprint(leads_bp)
-
 
 
 if __name__ == "__main__":

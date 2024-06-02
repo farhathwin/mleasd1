@@ -52,91 +52,122 @@
         }
     </style>
 </head>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+        .card-title {
+            margin-top: 0;
+        }
+        .card-content {
+            margin-bottom: 10px;
+        }
+        .lead-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .lead-stat {
+            flex-basis: 30%;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .lead-stat h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
 <body>
-    <form id="filterForm" method="POST" action="{{ url_for('leads.leads_report') }}">
-        <div class="form-group">
-            <label for="selected_user_id">Filter by User:</label>
-            <select name="selected_user_id" id="selected_user_id" class="form-control">
-                <option value="">All Users</option>
-                {% for user in users %}
-                    <option value="{{ user.id }}" {% if user.id == selected_user_id %}selected{% endif %}>{{ user.first_name }} {{ user.last_name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </form>
-    
-    <div class="container">
-        <!-- Your lead dashboard content -->
-    </div>
-
-    <script>
-        document.getElementById('selected_user_id').addEventListener('change', function() {
-            document.getElementById('filterForm').submit();
-        });
-    </script>
-    
     <div class="container">
         <h1>Lead Dashboard</h1>
-        <div class="lead-stats">
-            <div class="lead-stat">
-                <h3>Total Leads</h3>
-                <p>{{ total_leads }}</p>
+        <form id="filterForm" method="POST" action="{{ url_for('leads.leads_report') }}">
+            <div class="form-group">
+                <label for="selected_user_id">Filter by User:</label>
+                <select name="selected_user_id" id="selected_user_id" class="form-control" onchange="this.form.submit();">
+                    <option value="">All Users</option>
+                    {% for user in users %}
+                        <!-- Make sure to compare user.user_id if it's the correct attribute, adjust as needed -->
+                        <option value="{{ user.user_id }}" {% if selected_user_id|int == user.user_id %}selected{% endif %}>
+                            {{ user.first_name }} {{ user.last_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
             </div>
-            <div class="lead-stat">
-                <h3>Converted Leads</h3>
-                <p>{{ converted_leads }}</p>
-            </div>
-            <div class="lead-stat">
-                <h3>Conversion Rate</h3>
-                <p>{{ conversion_rate }}%</p>
-            </div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">Lead Breakdown by Inquiry Type</h2>
-            <div class="card-content">
+        </form>
+        
+        <div>
+            {% if selected_user_id %}
+                <h2>User ID: {{ selected_user_id }}</h2>
+            {% else %}
+                <h2>All Users Summary</h2>
+            {% endif %}
+            <p>Total Leads: {{ total_leads }}</p>
+            <p>Converted Leads: {{ converted_leads }}</p>
+            <p>Conversion Rate: {{ conversion_rate }}%</p>
+            <h3>Lead Breakdown by Inquiry Type:</h3>
+            <ul>
                 {% for inquiry_type, count in lead_breakdown.items() %}
-                <p>{{ inquiry_type }}: {{ count }} leads</p>
+                    <li>{{ inquiry_type }}: {{ count }} leads</li>
                 {% endfor %}
-            </div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">Lead Timeline</h2>
-            <div class="card-content">
-                <!-- Add a timeline chart here -->
-            </div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">Recent Leads</h2>
-            <div class="card-content">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Lead ID</th>
-                            <th>Customer Name</th>
-                            <th>Status</th>
-                            <th>Created Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for lead in leads %}
+            </ul>
+            <h3>Recent Leads:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lead ID</th>
+                        <th>Customer Name</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lead in recent_leads %}
                         <tr>
                             <td>{{ lead.lead_id }}</td>
-                            <td>{{ lead.customer_name }}</td>
+                            <td>{{ lead.xcustomer_name }}</td>
                             <td>{{ lead.status }}</td>
                             <td>{{ lead.created_date }}</td>
                         </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-
     <script>
         document.getElementById('selected_user_id').addEventListener('change', function() {
             document.getElementById('filterForm').submit();
         });
-    </script>
+    </script>    
 </body>
 </html>
+
