@@ -24,11 +24,11 @@
             <form method="POST" action="">
                 <div class="mb-3">
                     <label for="customerName" class="form-label">Customer Name</label>
-                    <input type="text" id="customerName" value="{{ customer.full_name if customer else 'No Customer' }}" class="form-control" readonly>
+                    <input type="text" id="customerName" value="{{ lead.customer.full_name if customer else 'No Customer' }}" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email ID</label>
-                    <input type="email" id="email" value="{{ customer.email if customer else 'No Email' }}" class="form-control" readonly>
+                    <input type="email" id="email" value="{{ lead.customer.email if customer else 'No Email' }}" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="phoneNo" class="form-label">Phone No</label>

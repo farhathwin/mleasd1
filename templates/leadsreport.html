@@ -115,15 +115,23 @@
                 <select name="selected_user_id" id="selected_user_id" class="form-control" onchange="this.form.submit();">
                     <option value="">All Users</option>
                     {% for user in users %}
-                        <!-- Make sure to compare user.user_id if it's the correct attribute, adjust as needed -->
-                        <option value="{{ user.user_id }}" {% if selected_user_id|int == user.user_id %}selected{% endif %}>
+                        <option value="{{ user.user_id }}" {% if user.user_id == (selected_user_id | default(0) | int) %}selected{% endif %}>
                             {{ user.first_name }} {{ user.last_name }}
                         </option>
+                    
                     {% endfor %}
                 </select>
-                
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}" onchange="this.form.submit();">
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}" onchange="this.form.submit();">
             </div>
         </form>
+        
         
         <div>
             {% if selected_user_id %}

@@ -15,7 +15,7 @@
                     <!-- User filter dropdown -->
                     <form method="GET" action="{{ url_for('customer_leads_list') }}" class="me-3">
                         <div class="form-group mb-0">
-                            <select name="user_filter" id="userFilter" class="form-control" onchange="this.form.submit()">
+                            <select name="selected_user_id" id="selected_user_id" class="form-control" onchange="this.form.submit();">
                                 <option value="all">All Users</option>
                                 {% for user in users %}
                                 <option value="{{ user.id }}" {% if request.args.get('user_filter', default='all')|string == user.id|string %}selected{% endif %}>
@@ -86,4 +86,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %}y

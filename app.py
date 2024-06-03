@@ -1143,6 +1143,10 @@ def customer_leads_list():
     if 'user_id' not in session or 'company_id' not in session:
         flash('Please log in again.', 'warning')
         return redirect(url_for('login'))
+    # Initialize selected_user_id from GET or POST request
+    selected_user_id = request.args.get('selected_user_id', default=None)
+    if request.method == 'POST':
+        selected_user_id = request.form.get('selected_user_id', type=int)
 
     company_id = session.get('company_id')
     if not company_id:
@@ -1190,7 +1194,7 @@ def customer_leads_list():
         flash(f'Error retrieving leads: {str(e)}', 'danger')
         enhanced_leads = []
 
-    return render_template('customer_leads_list.html', leads=enhanced_leads, users=users)
+    return render_template('customer_leads_list.html', leads=enhanced_leads, users=users , selected_user_id=selected_user_id)
 
 
 
@@ -1204,9 +1208,11 @@ def update_leads(lead_id):
     company_id = session['company_id']
     user_id = session['user_id']
 
+     # Directly use lead_id from the parameter
     lead = Lead.query \
         .join(Customer, (Lead.customer_id == Customer.customer_id) & (Customer.company_id == company_id)) \
         .filter(Lead.lead_id == lead_id, Lead.company_id == company_id) \
+        .options(contains_eager(Lead.customer)) \
         .first()
 
     if not lead:
@@ -1347,12 +1353,19 @@ def leads_report():
     users = User.query.filter_by(company_id=company_id).all()
 
     selected_user_id = request.form.get('selected_user_id', type=int) if request.method == 'POST' else None
-    recent_leads = []  # Initialize at the top to ensure it's always defined
+    start_date = request.form.get('start_date')
+    end_date = request.form.get('end_date')
+
+    query = Lead.query.filter(Lead.company_id == company_id)
 
     if selected_user_id:
-        query = Lead.query.filter_by(company_id=company_id, user_id=selected_user_id)
-    else:
-        query = Lead.query.filter_by(company_id=company_id)
+        query = query.filter(Lead.user_id == selected_user_id)
+    
+    if start_date:
+        query = query.filter(Lead.date >= datetime.strptime(start_date, '%Y-%m-%d'))
+    
+    if end_date:
+        query = query.filter(Lead.date <= datetime.strptime(end_date, '%Y-%m-%d'))
 
     leads = query.all()
     total_leads = len(leads)
@@ -1368,10 +1381,13 @@ def leads_report():
 
     recent_leads = query.order_by(Lead.date.desc()).limit(5).all()
 
+    
+
     return render_template('leadsreport.html', total_leads=total_leads, converted_leads=converted_leads,
                            conversion_rate=conversion_rate, lead_breakdown=lead_breakdown,
-                           recent_leads=recent_leads, users=users, selected_user_id=selected_user_id)
-# Register the blueprint with the Flask application
+                           recent_leads=recent_leads, users=users, selected_user_id=selected_user_id,
+                           start_date=start_date, end_date=end_date)
+
 app.register_blueprint(leads_bp)
 
 
