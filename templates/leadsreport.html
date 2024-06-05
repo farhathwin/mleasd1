@@ -1,156 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lead Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            text-align: center;
-        }
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #fff;
-        }
-        .card-title {
-            margin-top: 0;
-        }
-        .card-content {
-            margin-bottom: 10px;
-        }
-        .lead-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .lead-stat {
-            flex-basis: 30%;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: #f0f0f0;
-        }
-        .lead-stat h3 {
-            margin-top: 0;
-        }
-    </style>
-</head>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lead Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            text-align: center;
-        }
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #fff;
-        }
-        .card-title {
-            margin-top: 0;
-        }
-        .card-content {
-            margin-bottom: 10px;
-        }
-        .lead-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .lead-stat {
-            flex-basis: 30%;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: #f0f0f0;
-        }
-        .lead-stat h3 {
-            margin-top: 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Lead Dashboard</h1>
-        <form id="filterForm" method="POST" action="{{ url_for('leads.leads_report') }}">
-            <div class="form-group">
-                <label for="selected_user_id">Filter by User:</label>
-                <select name="selected_user_id" id="selected_user_id" class="form-control" onchange="this.form.submit();">
-                    <option value="">All Users</option>
-                    {% for user in users %}
+{% extends "base.html" %}
+
+{% block title %}Leads Report | MLEASD.COM{% endblock %}
+{% block meta_description %}View and manage customer leads effectively.{% endblock %}
+{% block meta_author %}Your Company Name{% endblock %}
+{% block meta_keywords %}Customer Leads, Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h1 class="display-4 text-center mb-4">Lead Dashboard</h1>
+    <form id="filterForm" method="POST" action="{{ url_for('leads.leads_report') }}" class="mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="selected_user_id">Filter by User:</label>
+                    <select name="selected_user_id" id="selected_user_id" class="form-control" onchange="this.form.submit();">
+                        <option value="">All Users</option>
+                        {% for user in users %}
                         <option value="{{ user.user_id }}" {% if user.user_id == (selected_user_id | default(0) | int) %}selected{% endif %}>
                             {{ user.first_name }} {{ user.last_name }}
                         </option>
-                    
-                    {% endfor %}
-                </select>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}" onchange="this.form.submit();">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}" onchange="this.form.submit();">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+                </div>
             </div>
-        </form>
-        
-        
-        <div>
+        </div>
+    </form>
+
+    <div class="card">
+        <div class="card-body">
             {% if selected_user_id %}
-                <h2>User ID: {{ selected_user_id }}</h2>
+            <h2 class="card-title">User ID: {{ selected_user_id }}</h2>
             {% else %}
-                <h2>All Users Summary</h2>
+            <h2 class="card-title">All Users Summary</h2>
             {% endif %}
-            <p>Total Leads: {{ total_leads }}</p>
-            <p>Converted Leads: {{ converted_leads }}</p>
-            <p>Conversion Rate: {{ conversion_rate }}%</p>
-            <h3>Lead Breakdown by Inquiry Type:</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="alert alert-primary" role="alert">
+                        <strong>Total Leads:</strong> {{ total_leads }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">
+                        <strong>Converted Leads:</strong> {{ converted_leads }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-info" role="alert">
+                        <strong>Conversion Rate:</strong> {{ conversion_rate }}%
+                    </div>
+                </div>
+            </div>
+            <h3 class="mt-4">Lead Breakdown by Inquiry Type:</h3>
             <ul>
                 {% for inquiry_type, count in lead_breakdown.items() %}
-                    <li>{{ inquiry_type }}: {{ count }} leads</li>
+                <li>{{ inquiry_type }}: {{ count }} leads</li>
                 {% endfor %}
             </ul>
-            <h3>Recent Leads:</h3>
-            <table>
-                <thead>
+            <h3 class="mt-4">Recent Leads:</h3>
+            <table class="table table-striped">
+                <thead class="thead-dark">
                     <tr>
                         <th>Lead ID</th>
                         <th>Customer Name</th>
@@ -160,22 +80,16 @@
                 </thead>
                 <tbody>
                     {% for lead in recent_leads %}
-                        <tr>
-                            <td>{{ lead.lead_id }}</td>
-                            <td>{{ lead.xcustomer_name }}</td>
-                            <td>{{ lead.status }}</td>
-                            <td>{{ lead.created_date }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ lead.lead_id }}</td>
+                        <td>{{ lead.customer_name }}</td>
+                        <td>{{ lead.status }}</td>
+                        <td>{{ lead.created_date }}</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-    <script>
-        document.getElementById('selected_user_id').addEventListener('change', function() {
-            document.getElementById('filterForm').submit();
-        });
-    </script>    
-</body>
-</html>
-
+</div>
+{% endblock %}
