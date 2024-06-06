@@ -26,13 +26,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="start_date">Start Date:</label>
-                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}" onchange="this.form.submit();">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="end_date">End Date:</label>
-                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}" onchange="this.form.submit();">
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="alert alert-info" role="alert">
-                        <strong>Conversion Rate:</strong> {{ conversion_rate }}%
+                        <strong>Conversion Rate:</strong> {{ conversion_rate | round(0, 'ceil') }}%
                     </div>
                 </div>
             </div>
