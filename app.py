@@ -1143,16 +1143,18 @@ def customer_leads_list():
     if 'user_id' not in session or 'company_id' not in session:
         flash('Please log in again.', 'warning')
         return redirect(url_for('login'))
-    # Initialize selected_user_id from GET or POST request
-    selected_user_id = request.args.get('selected_user_id', default=None)
-    if request.method == 'POST':
-        selected_user_id = request.form.get('selected_user_id', type=int)
-
+    
+    
+    
     company_id = session.get('company_id')
     if not company_id:
         flash('Company ID not found in session.', 'error')
         return redirect(url_for('login'))
-
+    
+    users = User.query.filter_by(company_id=company_id).all()
+    selected_user_id = request.form.get('selected_user_id', type=int) if request.method == 'POST' else None
+    
+    
     try:
         # Define status map
         status_map = {
@@ -1163,7 +1165,11 @@ def customer_leads_list():
         }
 
         # Fetch leads data sorted by creation date in descending order
-        leads = db.session.query(Lead).filter_by(company_id=company_id).order_by(Lead.date.desc()).all()
+        query = db.session.query(Lead).filter_by(company_id=company_id)
+        if selected_user_id:
+            query = query.filter_by(user_id=selected_user_id)
+        
+        leads = query.order_by(Lead.date.desc()).all()
 
         # Fetch corresponding customers separately
         customer_ids = [lead.customer_id for lead in leads if lead.customer_id]
@@ -1194,7 +1200,8 @@ def customer_leads_list():
         flash(f'Error retrieving leads: {str(e)}', 'danger')
         enhanced_leads = []
 
-    return render_template('customer_leads_list.html', leads=enhanced_leads, users=users , selected_user_id=selected_user_id)
+    return render_template('customer_leads_list.html', leads=enhanced_leads, users=users, selected_user_id=selected_user_id)
+
 
 
 
@@ -1225,6 +1232,7 @@ def update_leads(lead_id):
 
         if lead_status in [0, 1, 2, 3]:
             lead.is_leads = lead_status
+            lead.is_lead_date = datetime.utcnow()
             db.session.commit()  # Make sure to commit the change
             flash('Lead status updated successfully.', 'success')
         else:
@@ -1356,32 +1364,36 @@ def leads_report():
     start_date = request.form.get('start_date')
     end_date = request.form.get('end_date')
 
-    query = Lead.query.filter(Lead.company_id == company_id)
+    query_total_leads = Lead.query.filter(Lead.company_id == company_id)
+    query_converted_leads = Lead.query.filter(Lead.company_id == company_id, Lead.is_leads == 0)
 
     if selected_user_id:
-        query = query.filter(Lead.user_id == selected_user_id)
+        query_total_leads = query_total_leads.filter(Lead.user_id == selected_user_id)
+        query_converted_leads = query_converted_leads.filter(Lead.user_id == selected_user_id)
     
     if start_date:
-        query = query.filter(Lead.date >= datetime.strptime(start_date, '%Y-%m-%d'))
+        start_date_obj = datetime.strptime(start_date, '%Y-%m-%d')
+        query_total_leads = query_total_leads.filter(Lead.date >= start_date_obj)
+        query_converted_leads = query_converted_leads.filter(Lead.is_lead_date >= start_date_obj)
     
     if end_date:
-        query = query.filter(Lead.date <= datetime.strptime(end_date, '%Y-%m-%d'))
+        end_date_obj = datetime.strptime(end_date, '%Y-%m-%d')
+        query_total_leads = query_total_leads.filter(Lead.date <= end_date_obj)
+        query_converted_leads = query_converted_leads.filter(Lead.is_lead_date <= end_date_obj)
 
-    leads = query.all()
-    total_leads = len(leads)
-    converted_leads = sum(1 for lead in leads if lead.is_leads == 0)
+    total_leads = query_total_leads.count()
+    converted_leads = query_converted_leads.count()
     conversion_rate = (converted_leads / total_leads) * 100 if total_leads > 0 else 0
 
     lead_breakdown = {}
+    leads = query_total_leads.all()
     for lead in leads:
         if lead.inquiry_type in lead_breakdown:
             lead_breakdown[lead.inquiry_type] += 1
         else:
             lead_breakdown[lead.inquiry_type] = 1
 
-    recent_leads = query.order_by(Lead.date.desc()).limit(5).all()
-
-    
+    recent_leads = query_total_leads.order_by(Lead.date.desc()).limit(5).all()
 
     return render_template('leadsreport.html', total_leads=total_leads, converted_leads=converted_leads,
                            conversion_rate=conversion_rate, lead_breakdown=lead_breakdown,
@@ -1389,7 +1401,6 @@ def leads_report():
                            start_date=start_date, end_date=end_date)
 
 app.register_blueprint(leads_bp)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
