@@ -47,19 +47,24 @@
                         <tbody>
                             {% if leads %}
                             {% for lead_info in leads %}
-                                <tr>
-                                    <td><input type="checkbox" name="selected_leads" value="{{ lead_info.lead.lead_id }}"></td>
-                                    <td>{{ lead_info.lead.lead_id }}</td>
-                                    <td>{{ lead_info.customer.full_name if lead_info.customer else 'No Customer' }}</td>
-                                    <td>{{ lead_info.customer.phone_no if lead_info.customer else 'N/A' }}</td>
-                                    <td>{{ lead_info.lead.inquiry_type }}</td>
-                                    <td>{{ lead_info.user.first_name if lead_info.user else 'Unknown' }}</td>
-                                    <td>{{ lead_info.lead.date.strftime('%Y-%m-%d') }}</td>
-                                    <td class="{{ lead_info.status_class }}"><span class="text-white">{{ lead_info.status_label }}</span></td>
-                                    <td>
-                                        <a href="{{ url_for('update_leads', lead_id=lead_info.lead.lead_id) }}" class="btn btn-sm btn-info">View</a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td><input type="checkbox" name="selected_leads" value="{{ lead_info.lead.lead_id }}"></td>
+                                <td>{{ lead_info.lead.lead_id }}</td>
+                                <td>{{ lead_info.customer.full_name if lead_info.customer else 'No Customer' }}</td>
+                                <td>{{ lead_info.customer.phone_no if lead_info.customer else 'N/A' }}</td>
+                                <td>{{ lead_info.lead.inquiry_type }}</td>
+                                <td>{{ lead_info.user.first_name if lead_info.user else 'Unknown' }}</td>
+                                <td>{{ lead_info.lead.date.strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    <span class="badge {{ lead_info.status_class }}">
+                                        <span class="text-white">{{ lead_info.status_label }}</span>
+                                    </span>
+                                </td>
+                                <td>    
+                                    <a href="{{ url_for('update_leads', lead_id=lead_info.lead.lead_id) }}" class="btn btn-sm btn-info">View</a>
+                                </td>
+                            </tr>
+                            
                             {% endfor %}
                             {% else %}
                                 <tr>

@@ -22,8 +22,6 @@ def fetch_related_agent(user):
 
 
 
-
-
 def fetch_agent_by_id(agent_id):
     return Agent.query.get(agent_id)
 

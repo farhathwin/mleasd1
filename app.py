@@ -1,6 +1,6 @@
 
 from flask import Flask, render_template, request, redirect , url_for , flash , session , current_app , jsonify , Blueprint
-from init_db import User, datetime , Agent , db ,Customer ,CustomerComment ,Lead    
+from init_db import User, datetime , Agent , db ,Customer ,CustomerComment ,Lead , Role
 from config import SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, SENDER_PASSWORD
 from otp_sender import send_otp_email   
 import random , openpyxl 
@@ -17,6 +17,7 @@ from werkzeug.utils import secure_filename
 from flask_migrate import Migrate
 from functools import wraps
 from sqlalchemy.orm import joinedload , contains_eager
+from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 
 
 UPLOAD_FOLDER = 'D:/Mleasd New- Project Farhath 07-10-23/static/img'
@@ -70,7 +71,12 @@ smtp_port = SMTP_PORT
 sender_email = SENDER_EMAIL
 sender_password = SENDER_PASSWORD
 
+login_manager = LoginManager()
+login_manager.init_app(app)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 def get_user_id_somehow():
     user_id = session.get('user_id')
@@ -103,6 +109,13 @@ def requires_permission(permission):
             return f(*args, **kwargs)
         return decorated_function
     return decorator
+
+def assign_role(user, role_name):
+    role = Role.query.filter_by(name=role_name).first()
+    if role:
+        user.roles.append(role)
+        db.session.commit()
+
 
 
 
@@ -1402,5 +1415,18 @@ def leads_report():
 
 app.register_blueprint(leads_bp)
 
-if __name__ == "__main__":
+def init_roles():
+    with app.app_context():
+        roles = ['Admin', 'Supervisor', 'Team Leader', 'User']
+        for role_name in roles:
+            role = Role.query.filter_by(name=role_name).first()
+            if role is None:
+                role = Role(name=role_name)
+                db.session.add(role)
+        db.session.commit()
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Ensure all tables are created
+        init_roles()
     app.run(debug=True)

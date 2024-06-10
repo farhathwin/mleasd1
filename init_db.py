@@ -6,15 +6,38 @@ from sqlalchemy.orm import validates , relationship
 from sqlalchemy import LargeBinary 
 from flask_sqlalchemy import SQLAlchemy
 import re
-
+from flask_login import UserMixin
+    
 
 db = SQLAlchemy()
 def init_db(app):
     db.init_app(app)
 
+
+
+# Define the many-to-many relationship tables
+role_permissions = db.Table('role_permissions',
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),
+    db.Column('permission_id', db.Integer, db.ForeignKey('permission.id'), primary_key=True)
+)
+
+user_roles = db.Table('user_roles',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),
+    extend_existing=True  # Add this parameter
+)
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    permissions = db.relationship('Permission', secondary=role_permissions, backref=db.backref('roles', lazy='dynamic'))
+
+class Permission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
 # Models 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
@@ -46,16 +69,12 @@ class User(db.Model):
     photo_filename = db.Column(db.String(100), nullable=True)
     photo_mime_type = db.Column(db.String(50), nullable=True)
     agents = db.relationship('Agent', backref='user_agent', lazy=True, overlaps="user")
-    roles = db.relationship('Role', secondary='user_roles', backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship('Role', secondary=user_roles, backref=db.backref('users', lazy='dynamic'))
 
-    user_roles = db.Table('user_roles',
-        db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-        db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True)
-    )
     
 
 
-    def __init__(self, first_name, last_name, email, business_name, otp=None, is_verified=False,  company_id=None, user_id=None):
+    def __init__(self, first_name, last_name, email, business_name, otp=None, is_verified=False, company_id=None, user_id=None):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -65,6 +84,12 @@ class User(db.Model):
         self.user_id = user_id
         self.company_id = company_id
 
+    def has_permission(self, permission_name):
+        for role in self.roles:
+            for permission in role.permissions:
+                if permission.name == permission_name:
+                    return True
+        return False
     
 
 
@@ -215,22 +240,6 @@ class Lead(db.Model):
 
 
    
-
-class Role(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    permissions = db.relationship('Permission', secondary='role_permissions', backref=db.backref('roles', lazy='dynamic'))
-
-class Permission(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-
-role_permissions = db.Table('role_permissions',
-    db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),
-    db.Column('permission_id', db.Integer, db.ForeignKey('permission.id'), primary_key=True)
-)
-
-
 
 
 
