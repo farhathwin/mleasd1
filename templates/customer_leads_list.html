@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Customer Leads List  | MLEASD.COM{% endblock %}
+{% block title %}Customer Leads List | MLEASD.COM{% endblock %}
 {% block meta_description %}View and manage customer leads{% endblock %}
 {% block meta_author %}Your Name{% endblock %}
 {% block meta_keywords %}Customer Leads, Management{% endblock %}
@@ -16,7 +16,7 @@
                     <form method="GET" action="{{ url_for('customer_leads_list') }}" class="me-3">
                         <div class="form-group mb-0">
                             <select name="selected_user_id" id="selected_user_id" class="form-control" onchange="this.form.submit();">
-                                <option value="">All Users</option>
+                                <option value="all" {% if selected_user_id == 'all' %}selected{% endif %}>All Users</option>
                                 {% for user in users %}
                                 <option value="{{ user.user_id }}" {% if user.user_id == (selected_user_id | default(0) | int) %}selected{% endif %}>
                                     {{ user.first_name }} {{ user.last_name }}
@@ -64,7 +64,6 @@
                                     <a href="{{ url_for('update_leads', lead_id=lead_info.lead.lead_id) }}" class="btn btn-sm btn-info">View</a>
                                 </td>
                             </tr>
-                            
                             {% endfor %}
                             {% else %}
                                 <tr>

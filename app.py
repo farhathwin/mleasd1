@@ -1157,17 +1157,20 @@ def customer_leads_list():
         flash('Please log in again.', 'warning')
         return redirect(url_for('login'))
     
-    
-    
     company_id = session.get('company_id')
+    session_user_id = session.get('user_id')
+    
     if not company_id:
         flash('Company ID not found in session.', 'error')
         return redirect(url_for('login'))
     
+    # Filter users by company_id
     users = User.query.filter_by(company_id=company_id).all()
-    selected_user_id = request.form.get('selected_user_id', type=int) if request.method == 'POST' else None
-    
-    
+    selected_user_id = request.args.get('selected_user_id')
+
+    if not selected_user_id:  # Default to session user_id if no user selected
+        selected_user_id = session_user_id
+
     try:
         # Define status map
         status_map = {
@@ -1179,8 +1182,8 @@ def customer_leads_list():
 
         # Fetch leads data sorted by creation date in descending order
         query = db.session.query(Lead).filter_by(company_id=company_id)
-        if selected_user_id:
-            query = query.filter_by(user_id=selected_user_id)
+        if selected_user_id and selected_user_id != 'all':
+            query = query.filter_by(user_id=int(selected_user_id))
         
         leads = query.order_by(Lead.date.desc()).all()
 
@@ -1193,8 +1196,8 @@ def customer_leads_list():
 
         # Fetch users and map them
         user_ids = [lead.user_id for lead in leads]
-        users = db.session.query(User).filter(User.user_id.in_(user_ids)).all()
-        user_dict = {user.user_id: user for user in users}
+        filtered_users = db.session.query(User).filter(User.user_id.in_(user_ids), User.company_id == company_id).all()
+        user_dict = {user.user_id: user for user in filtered_users}
 
         # Enhance leads with customer and user info, and status labels
         enhanced_leads = []
@@ -1214,6 +1217,12 @@ def customer_leads_list():
         enhanced_leads = []
 
     return render_template('customer_leads_list.html', leads=enhanced_leads, users=users, selected_user_id=selected_user_id)
+
+
+
+
+
+
 
 
 
