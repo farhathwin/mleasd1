@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Master Agent Dashboard| MLEASD.COM{% endblock %}
-{% block meta_description %}Master Agent Dashboard| MLEASD.COM{% endblock %}
+{% block title %}Master Agent Dashboard | MLEASD.COM{% endblock %}
+{% block meta_description %}Master Agent Dashboard | MLEASD.COM{% endblock %}
 {% block meta_author %}Your Name{% endblock %}
-{% block meta_keywords %}Master Agent Dashboard| MLEASD.COM{% endblock %}
+{% block meta_keywords %}Master Agent Dashboard | MLEASD.COM{% endblock %}
 
 {% block content %}
 
@@ -22,7 +22,7 @@
                                
                                 <div class="main-signup-header">
                                     <h2 class="text-primary">Create User</h2>
-                                    <form action="{{ url_for('register_master_subuser') }}" method="POST">
+                                    <form action="{{ url_for('register_subuser') }}" method="POST">
                                         <div class="mb-3">
                                             <label for="first_name" class="form-label">First Name</label>
                                             <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required>
@@ -42,7 +42,15 @@
                                                 {% endwith %}
                                             </div> <!-- Validation message -->
                                         </div>
-                                        <button class="btn btn-main-primary btn-block" type="submit" onclick="generateOTP()">Create User</button>
+                                        <div class="mb-3">
+                                            <label for="role" class="form-label">Role</label>
+                                            <select class="form-control" id="role" name="role" required>
+                                                {% for role in roles %}
+                                                    <option value="{{ role.id }}">{{ role.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-main-primary btn-block" type="submit">Create User</button>
                                     </form>
                                 </div>
                             </div>

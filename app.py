@@ -347,10 +347,7 @@ def register():
             return redirect(url_for('login'))  # or return to the registration page
 
         # New company or existing company check
-        
         existing_company = User.query.filter(User.email).first()
-            
-
         if existing_company:
             flash('This domain is already registered with another company.', 'warning')
             return redirect(url_for('register'))
@@ -365,9 +362,16 @@ def register():
         # Generate user_id
         last_user_id_within_company = db.session.query(func.max(User.user_id)).filter_by(company_id=company_id).scalar()
         user_id = (last_user_id_within_company + 1) if last_user_id_within_company else 1
-        
+
         # Generating a random OTP
         otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+
+        # Check for 'Admin' role
+        admin_role = Role.query.filter_by(name='Admin').first()
+        if not admin_role:
+            admin_role = Role(name='Admin')
+            db.session.add(admin_role)
+            db.session.commit()
 
         try:
             new_user = User(
@@ -380,6 +384,7 @@ def register():
                 otp=otp,
                 is_verified=False
             )
+            new_user.roles.append(admin_role)
             db.session.add(new_user)
             db.session.commit()
 
@@ -398,6 +403,7 @@ def register():
         return redirect(url_for('register'))
 
     return render_template('register.html')
+
 
 
 
@@ -509,6 +515,7 @@ def register_subuser():
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         email = request.form.get('email')
+        role_id = request.form.get('role')
         otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
 
         try:
@@ -519,15 +526,18 @@ def register_subuser():
             else:
                 new_subuser = User(
                     user_id=new_user_id,
-                    company_id=session['company_id'],
+                    company_id=company_id,
                     first_name=first_name,
                     last_name=last_name,
-                    business_name= business_name,
+                    business_name=business_name,
                     email=email,
                     otp=otp,
                     is_verified=False
                 )
-
+                
+                role = Role.query.get(role_id)
+                new_subuser.roles.append(role)
+                
                 db.session.add(new_subuser)
                 db.session.commit()
 
@@ -536,7 +546,6 @@ def register_subuser():
                 registration_tokens[registration_token] = email
 
                 confirmation_link = url_for('confirm_registration', token=registration_token, _external=True)
-
                 print(confirmation_link)
 
                 if send_registration_email(email, confirmation_link, smtp_server, smtp_port, sender_email, sender_password):
@@ -549,12 +558,9 @@ def register_subuser():
         except IntegrityError:
             flash('Email address is already registered. Please use a different email.', 'email-danger')
 
-    user = None
-    if 'email' in session:
-        email = session['email']
-        user = fetch_user_data(email)
+    roles = Role.query.all()
+    return render_template('register_subuser.html', roles=roles)
 
-    return render_template('register_user.html', user=user)
 
 @app.route('/register-agent-subuser', methods=['GET', 'POST'])
 def register_agent_subuser():
