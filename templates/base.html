@@ -868,8 +868,9 @@
 									</li>
 								</ul>
 							</li>
+							{% if 'Admin' in roles or 'Supervisor' in roles %}
+								<li class="side-item side-item-category">Settings</li>
 							
-							<li class="side-item side-item-category">Settings</li>
 							<li class="slide">
 								<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><i
 										class="bx bx-file side-menu__icon"></i><span
@@ -914,7 +915,9 @@
 														</li>
 														<li>
 														<li>
-															<a class="slide-item" href="{{ url_for('userlist') }}">User list</a>
+															{% if 'Admin' in roles or 'Supervisor' in roles %}
+																<a class="slide-item" href="{{ url_for('userlist') }}">User list</a>
+															{% endif %}
 														</li>
 															
 														<li>
@@ -927,7 +930,7 @@
 									</li>
 								</ul>
 							</li>
-							
+							{% endif %}	
 						</ul>
 						<div class="slide-right" id="slide-right">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"

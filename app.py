@@ -117,6 +117,26 @@ def assign_role(user, role_name):
         db.session.commit()
 
 
+def role_required(*roles):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'email' not in session:
+                flash('Please log in to access this page.', 'danger')
+                return redirect(url_for('login'))
+            
+            email = session['email']
+            user = User.query.filter_by(email=email).first()
+            
+            if user and any(role.name in roles for role in user.roles):
+                return f(*args, **kwargs)
+            else:
+                flash('You do not have permission to access this page.', 'danger')
+                return redirect(url_for('login'))
+        return decorated_function
+    return decorator
+
+
 
 
 @app.route('/userprofile', methods=['GET', 'POST'])
@@ -725,6 +745,7 @@ def handle_confirmation(token):
 
 #Mster Subuser list 
 @app.route('/userlist', methods=['GET'])
+@role_required('Admin', 'Supervisor')
 def userlist():
     if 'email' in session:
         email = session['email']
@@ -732,7 +753,8 @@ def userlist():
         if user:
             # Fetch the list of Users associated with the company's ID
             users = User.query.filter_by(company_id=user.company_id).all()
-            return render_template('userlist.html', user=user, users=users)
+            roles = session.get('roles', [])
+            return render_template('userlist.html', user=user, users=users, roles=roles)
         else:
             flash('User not found.', 'danger')
             return redirect(url_for('login'))
@@ -851,42 +873,41 @@ def manage_agent(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     model_type = None
-    
+
     if request.method == 'POST':
         email = request.form.get('email')
         model_type = request.form.get('model_type')
 
         user = User.query.filter_by(email=email).first()
-        
         agent = Agent.query.filter_by(email=email).first()
-        
 
         if user:
             model_type = 'user'
-        
         elif agent:
             model_type = 'agent'
-        
         else:
             flash('Email address not found. Please register first.', 'danger')
+            return render_template('login.html', model_type=model_type)
 
         if model_type:
             new_otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-            
+
             if model_type == 'user':
                 user.otp = new_otp
                 user.date = datetime.utcnow()
                 user.time = datetime.now().strftime("%H:%M:%S")
                 if user:
                     session['user_id'] = user.id
-            
+                    session['roles'] = [role.name for role in user.roles]  # Store user roles in session
+
             elif model_type == 'agent':
                 agent.otp = new_otp
                 agent.date = datetime.utcnow()
                 agent.time = datetime.now().strftime("%H:%M:%S")
                 if agent:
                     session['user_id'] = agent.id
-            
+                    session['roles'] = []  # Agents may not have roles or handle differently if needed
+
             db.session.commit()
 
             if send_otp_email(email, new_otp, SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, SENDER_PASSWORD):
@@ -899,6 +920,7 @@ def login():
                 flash('Error sending OTP. Please try again later.', 'danger')
 
     return render_template('login.html', model_type=model_type)
+
 
 
 @app.route('/verify/<model_type>', methods=['GET', 'POST'])
