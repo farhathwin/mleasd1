@@ -22,6 +22,7 @@
                                 <th>Email</th>
                                 <th>Created</th>
                                 <th>Status</th>
+                                <th>User Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -29,9 +30,9 @@
                             {% for user in users %}
                             <tr>
                                 <td>{{ user.user_id }}</td>
-                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                <td>{{ user.first_name }}</td>
                                 <td>{{ user.email }}</td>
-                                <td>{{ user.date }}</td>
+                                <td>{{ user.date.strftime('%Y-%m-%d') }}</td>
                                 <td>
                                     {% if user.is_verified %}
                                     <span class="text-success">Active</span>
@@ -40,32 +41,47 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    {% if user.roles %}
+                                    {{ user.roles[0].name }}
+                                    {% else %}
+                                    <span class="text-muted">No Role</span>
+                                    {% endif %}
+                                </td>
+                                <td>
                                     <div class="d-flex gap-2">
-                                        <form method="POST" action="{{ url_for('manage_userlist', user_id=user.id) }}">
+                                        <form method="POST" action="{{ url_for('manage_userlist') }}">
+                                            <input type="hidden" name="user_id" value="{{ user.user_id }}">
                                             {% if user.is_verified %}
                                             <input type="hidden" name="action" value="suspend">
                                             <button type="submit" class="btn btn-icon btn-warning" data-bs-toggle="tooltip" title="Suspend Agent" data-bs-placement="top">
-                                                <!-- Your button icon or text for suspend action -->
+                                               
                                             </button>
                                             {% else %}
                                             <button type="button" class="btn btn-icon btn-warning disabled" data-bs-toggle="tooltip" title="Suspend Agent" data-bs-placement="top" disabled>
-                                                <!-- Your button icon or text for suspend action (disabled) -->
+                                               
                                             </button>
                                             {% endif %}
                                         </form>
-
-                                        <form method="POST" action="{{ url_for('manage_userlist', user_id=user.id) }}">
+                                        
+                                        <form method="POST" action="{{ url_for('manage_userlist') }}">
+                                            <input type="hidden" name="user_id" value="{{ user.user_id }}">
                                             {% if not user.is_verified %}
                                             <input type="hidden" name="action" value="activate">
                                             <button type="submit" class="btn btn-icon btn-success" data-bs-toggle="tooltip" title="Activate Agent" data-bs-placement="top">
-                                                <!-- Your button icon or text for activate action -->
+                                                
                                             </button>
                                             {% else %}
                                             <button type="button" class="btn btn-icon btn-success disabled" data-bs-toggle="tooltip" title="Activate Agent" data-bs-placement="top" disabled>
-                                                <!-- Your button icon or text for activate action (disabled) -->
+                                               
                                             </button>
                                             {% endif %}
                                         </form>
+                                        
+
+                                        <a href="{{ url_for('edit_subuser', user_id=user.user_id) }}" class="btn btn-icon btn-info" data-bs-toggle="tooltip" title="Edit User" data-bs-placement="top">
+                                            <!-- Your button icon or text for edit action -->
+                                            Edit
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

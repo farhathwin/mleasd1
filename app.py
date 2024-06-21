@@ -581,6 +581,36 @@ def register_subuser():
     roles = Role.query.all()
     return render_template('register_subuser.html', roles=roles)
 
+@app.route('/edit-subuser/<int:user_id>', methods=['GET', 'POST'])
+def edit_subuser(user_id):
+    if 'company_id' not in session:
+        flash('Please log in again.', 'warning')
+        return redirect(url_for('login'))
+    
+    company_id = session['company_id']
+    user = User.query.filter_by(company_id=company_id, user_id=user_id).first_or_404()
+
+    if request.method == 'POST':
+        user.first_name = request.form.get('first_name')
+        user.last_name = request.form.get('last_name')
+        user.email = request.form.get('email')
+        role_id = request.form.get('role')
+
+        role = Role.query.get(role_id)
+        user.roles = [role]
+
+        try:
+            db.session.commit()
+            flash('User updated successfully.', 'success')
+            return redirect(url_for('userlist'))
+        except IntegrityError:
+            flash('Error updating user. Please try again.', 'danger')
+
+    roles = Role.query.all()
+    return render_template('edit_subuser.html', user=user, roles=roles)
+
+
+
 
 @app.route('/register-agent-subuser', methods=['GET', 'POST'])
 def register_agent_subuser():
@@ -745,7 +775,7 @@ def handle_confirmation(token):
 
 #Mster Subuser list 
 @app.route('/userlist', methods=['GET'])
-@role_required('Admin', 'Supervisor')
+#@role_required('Admin', 'Supervisor')
 def userlist():
     if 'email' in session:
         email = session['email']
@@ -762,29 +792,38 @@ def userlist():
         flash('Please log in to access the user list.', 'danger')
         return redirect(url_for('login'))
     
-@app.route('/manage_userlist/<user_id>', methods=['POST'])
-def manage_userlist(user_id):
-    with current_app.app_context():
-        print(f"Received user_id: {user_id}")  # Check the user_id received
+@app.route('/manage_userlist', methods=['POST'])
+def manage_userlist():
+    if 'company_id' not in session:
+        flash('Please log in again.', 'warning')
+        return redirect(url_for('login'))
+    
+    company_id = session['company_id']
+    user_id = request.form.get('user_id')
+    action = request.form.get('action')
 
-        user = User.query.get(user_id)
-        if user:
-            action = request.form.get('action')
-            if action == 'suspend':
-                user.is_verified = False
-                flash('Agent suspended successfully!', 'success')
-            elif action == 'activate':
-                user.is_verified = True
-                flash('Agent activated successfully!', 'success')
-            else:
-                flash('Invalid action specified.', 'danger')
+    user = User.query.filter_by(company_id=company_id, user_id=user_id).first()
 
-            db.session.commit()
-        else:
-            flash('User details not found.', 'danger')
-            print("User details not found.")  # Log the issue for further investigation
-
+    if not user:
+        flash('User not found.', 'danger')
         return redirect(url_for('userlist'))
+
+    if action == 'suspend':
+        user.is_verified = False
+        flash('User suspended successfully.', 'success')
+    elif action == 'activate':
+        user.is_verified = True
+        flash('User activated successfully.', 'success')
+    else:
+        flash('Invalid action.', 'danger')
+
+    try:
+        db.session.commit()
+    except IntegrityError:
+        flash('Error updating user status. Please try again.', 'danger')
+
+    return redirect(url_for('userlist'))
+
 
 @app.route('/subagent_userlist', methods=['GET'])
 def subagent_userlist():
