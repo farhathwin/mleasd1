@@ -585,7 +585,7 @@ def register_subuser():
             flash('Email address is already registered. Please use a different email.', 'email-danger')
 
     all_roles = Role.query.all()
-    return render_template('register_subuser.html', roles=all_roles, user_roles=roles)
+    return render_template('register_subuser.html', roles_list=all_roles, roles=roles)
 
 
 
