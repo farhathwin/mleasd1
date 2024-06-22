@@ -132,9 +132,12 @@ def role_required(*roles):
                 return f(*args, **kwargs)
             else:
                 flash('You do not have permission to access this page.', 'danger')
-                return redirect(url_for('login'))
+                return redirect(request.referrer or url_for('userlist'))
         return decorated_function
     return decorator
+
+
+
 
 
 
@@ -429,6 +432,7 @@ def register():
 
 
 @app.route('/register-agent', methods=['GET', 'POST'])
+@role_required('Admin', 'Supervisor')
 def register_agent():
     #new_agent = None
     if request.method == 'POST':
@@ -521,6 +525,7 @@ def register_agent():
 
 
 @app.route('/register-subuser', methods=['GET', 'POST'])
+@role_required('Admin', 'Supervisor')
 def register_subuser():
     if 'user_id' not in session or 'company_id' not in session:
         flash('Please log in again.', 'warning')
@@ -528,6 +533,7 @@ def register_subuser():
 
     company_id = session['company_id']
     business_name = session['business_name']
+    roles = session.get('roles', [])
     existing_subusers_count = User.query.filter_by(company_id=company_id).count()
     new_user_id = existing_subusers_count + 1
 
@@ -578,10 +584,13 @@ def register_subuser():
         except IntegrityError:
             flash('Email address is already registered. Please use a different email.', 'email-danger')
 
-    roles = Role.query.all()
-    return render_template('register_subuser.html', roles=roles)
+    all_roles = Role.query.all()
+    return render_template('register_subuser.html', roles=all_roles, user_roles=roles)
+
+
 
 @app.route('/edit-subuser/<int:user_id>', methods=['GET', 'POST'])
+@role_required('Admin')
 def edit_subuser(user_id):
     if 'company_id' not in session:
         flash('Please log in again.', 'warning')
@@ -775,7 +784,7 @@ def handle_confirmation(token):
 
 #Mster Subuser list 
 @app.route('/userlist', methods=['GET'])
-#@role_required('Admin', 'Supervisor')
+@role_required('Admin', 'Supervisor')
 def userlist():
     if 'email' in session:
         email = session['email']
@@ -791,6 +800,7 @@ def userlist():
     else:
         flash('Please log in to access the user list.', 'danger')
         return redirect(url_for('login'))
+
     
 @app.route('/manage_userlist', methods=['POST'])
 def manage_userlist():
@@ -1023,9 +1033,10 @@ def dashboard():
         email = session['email']
         user = fetch_user_data(email) # Fetch user data based on email
         if user:
+            roles = session.get('roles', [])
             # Implement logic specific to the master dashboard
             # Fetch additional data if required
-            return render_template('dashboard.html', user=user)
+            return render_template('dashboard.html', user=user , roles=roles)
         else:
             flash('User not found.', 'danger')
             return redirect(url_for('login'))
