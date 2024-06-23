@@ -24,7 +24,7 @@
         <div class="mb-3">
             <label for="role" class="form-label">Role:</label>
             <select class="form-control" id="role" name="role" required>
-                {% for role in roles %}
+                {% for role in roles_list %}
                 <option value="{{ role.id }}" {% if user.roles and role.id == user.roles[0].id %}selected{% endif %}>{{ role.name }}</option>
                 {% endfor %}
             </select>

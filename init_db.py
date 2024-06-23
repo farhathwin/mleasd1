@@ -204,7 +204,7 @@ class CustomerComment(db.Model):
     __tablename__ = 'customer_comments'
     id = db.Column(db.Integer, primary_key=True)
     company_id = db.Column(db.String(10), nullable=False)
-    created_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    created_by = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     lead_id = db.Column(db.String(10), db.ForeignKey('leads.lead_id'), nullable=False)  # Link to the Leads table
     comment = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

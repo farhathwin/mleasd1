@@ -24,21 +24,20 @@
             <form method="POST" action="">
                 <div class="mb-3">
                     <label for="customerName" class="form-label">Customer Name</label>
-                    <input type="text" id="customerName" value="{{ lead.customer.full_name if customer else 'No Customer' }}" class="form-control" readonly>
+                    <input type="text" id="customerName" value="{{ lead.customer.full_name if lead.customer else 'No Customer' }}" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email ID</label>
-                    <input type="email" id="email" value="{{ lead.customer.email if customer else 'No Email' }}" class="form-control" readonly>
+                    <input type="email" id="email" value="{{ lead.customer.email if lead.customer else 'No Email' }}" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="phoneNo" class="form-label">Phone No</label>
-                    <input type="text" id="phoneNo" value="{{ customer.phone_no if customer else 'No Phone Number' }}" class="form-control" readonly>
+                    <input type="text" id="phoneNo" value="{{ lead.customer.phone_no if lead.customer else 'No Phone Number' }}" class="form-control" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="inquiry_type" class="form-label">Lead Type</label>
                     <input type="text" id="inquiry_type" value="{{ lead.inquiry_type }}" class="form-control" readonly>
                 </div>
-                <!-- Lead Status Dropdown -->
                 <!-- Lead Status Dropdown -->
                 <div class="mb-3">
                     <label for="lead_status" class="form-label">Lead Status</label>
@@ -49,7 +48,6 @@
                         <option value="3" {% if lead.is_leads == 3 %}selected{% endif %}>Closed</option>
                     </select>
                 </div>
-
 
                 <div class="mb-3">
                     <label for="comment" class="form-label">Comment</label>
@@ -71,7 +69,7 @@
         <div class="card mb-2">
             <div class="card-body">
                 <p class="mb-1">{{ comment.comment }}</p>
-                <small class="text-muted">Posted by {{ comment.user.first_name }} (User ID: {{ comment.created_by }}) on {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                <small class="text-muted">Posted by  {{ comment.user.first_name }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
             </div>
         </div>
         {% endfor %}

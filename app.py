@@ -147,6 +147,7 @@ def userprofile():
     if 'email' in session:
         email = session['email']
         user = User.query.filter_by(email=email).first()
+        roles = session.get('roles', [])
 
         if user:
             if request.method == 'POST':
@@ -232,7 +233,7 @@ def userprofile():
 
             # Fetch the list of Users associated with the user's ID
             user_profile = User.query.filter_by(id=user.id).all()
-            return render_template('profile_user.html', user=user, user_profile=user_profile)
+            return render_template('profile_user.html', user=user, user_profile=user_profile , roles=roles)
 
         else:
             flash('User not found.', 'danger')
@@ -247,6 +248,8 @@ def agentprofile():
     if 'email' in session:
         email = session['email']
         agent = fetch_agent_data(email)
+        roles = session.get('roles', [])
+        
 
         if agent:
             if request.method == 'POST':
@@ -336,7 +339,7 @@ def agentprofile():
 
             # Fetch the list of Users associated with the user's ID
             agent_profile = Agent.query.filter_by(id=agent.id).all()
-            return render_template('profile_agent.html', user=agent, agent_profile=agent_profile)
+            return render_template('profile_agent.html', user=agent, agent_profile=agent_profile,roles=roles)
 
         else:
             flash('User not found.', 'danger')
@@ -434,6 +437,9 @@ def register():
 @app.route('/register-agent', methods=['GET', 'POST'])
 @role_required('Admin', 'Supervisor')
 def register_agent():
+
+    roles = session.get('roles', [])
+
     #new_agent = None
     if request.method == 'POST':
         # Get form data
@@ -516,7 +522,7 @@ def register_agent():
             db.session.rollback()
             print(f"Error: {e}")
             flash('Error: {}'.format(str(e)), 'danger')
-            return render_template('register_agent.html')
+            return render_template('register_agent.html',roles=roles)
        
     # Render the registration form with the list of business names
     unique_business_names = db.session.query(User.business_name).distinct().all()
@@ -598,6 +604,7 @@ def edit_subuser(user_id):
     
     company_id = session['company_id']
     user = User.query.filter_by(company_id=company_id, user_id=user_id).first_or_404()
+    roles = session.get('roles', [])
 
     if request.method == 'POST':
         user.first_name = request.form.get('first_name')
@@ -615,14 +622,15 @@ def edit_subuser(user_id):
         except IntegrityError:
             flash('Error updating user. Please try again.', 'danger')
 
-    roles = Role.query.all()
-    return render_template('edit_subuser.html', user=user, roles=roles)
+    roles_list = Role.query.all()
+    return render_template('edit_subuser.html', user=user, roles_list=roles_list ,roles=roles)
 
 
 
 
 @app.route('/register-agent-subuser', methods=['GET', 'POST'])
 def register_agent_subuser():
+    roles = session.get('roles', [])
     print("Inside register_agent_subuser function")
     if 'user_id' not in session:
         flash('Please log in before registering a master subuser.', 'warning')
@@ -684,7 +692,7 @@ def register_agent_subuser():
                 session['email'] = session.get('email', email)
 
                 print("Redirecting to subagent_userlist")
-                return redirect(url_for('subagent_userlist'))  # Redirect to the user list page after successful registration
+                return redirect(url_for('subagent_userlist',roles=roles))  # Redirect to the user list page after successful registration
             else:
                 flash('Error sending the registration email. Please try again later.', 'danger')
     user = None
@@ -730,6 +738,7 @@ def confirm_registration(token):
 def complete_registration(token):
     email = registration_tokens.get(token)
     otp_data = otp_storage.get(email)
+    roles = session.get('roles', [])
 
     if not email or not otp_data or datetime.now() > otp_data['expiration']:
         flash('Invalid registration link. Please request a new link.', 'danger')
@@ -749,12 +758,13 @@ def complete_registration(token):
         return redirect(url_for('login'))  # Redirect to the login page
     else:
         flash('Invalid OTP. Please try again.', 'danger')
-        return render_template('confirm_registration.html', email=email, token=token)
+        return render_template('confirm_registration.html', email=email, token=token, roles=roles)
 
 #Handle OTP validation and user creation on the confirmation page
 @app.route('/confirm-registration/<token>', methods=['POST'])
 def handle_confirmation(token):
     email = registration_tokens.get(token)
+    roles = session.get('roles', [])
 
     if not email:
         flash('Invalid registration link. Please request a new link.', 'danger')
@@ -763,7 +773,7 @@ def handle_confirmation(token):
     otp_data = otp_storage.get(email)
     if not otp_data or datetime.now() > otp_data['expiration']:
         flash('The registration link has expired. Please request a new link.', 'danger')
-        return redirect(url_for('login'))  # Redirect to the login page
+        return redirect(url_for('login',roles=roles))  # Redirect to the login page
 
     user_otp = request.form.get('otp')  # Get OTP entered by the user
 
@@ -776,10 +786,10 @@ def handle_confirmation(token):
         del registration_tokens[token]
 
         flash('Registration complete. You can now log in.', 'success')
-        return redirect(url_for('login'))  # Redirect to the login page
+        return redirect(url_for('login',roles=roles))  # Redirect to the login page
 
     flash('Invalid OTP. Please try again.', 'danger')
-    return redirect(url_for('confirm_registration', token=token))
+    return redirect(url_for('confirm_registration', token=token,roles=roles))
 
 
 #Mster Subuser list 
@@ -811,6 +821,7 @@ def manage_userlist():
     company_id = session['company_id']
     user_id = request.form.get('user_id')
     action = request.form.get('action')
+    roles = session.get('roles', [])
 
     user = User.query.filter_by(company_id=company_id, user_id=user_id).first()
 
@@ -832,7 +843,7 @@ def manage_userlist():
     except IntegrityError:
         flash('Error updating user status. Please try again.', 'danger')
 
-    return redirect(url_for('userlist'))
+    return redirect(url_for('userlist',roles=roles))
 
 
 @app.route('/subagent_userlist', methods=['GET'])
@@ -840,21 +851,23 @@ def subagent_userlist():
     if 'email' in session:
         email = session['email']
         agent = fetch_agent_data(email)  # Fetch user data based on email
+        roles = session.get('roles', [])
         if agent:
             # Fetch the list of Users associated with the user's ID
             agent_subusers = Agent.query.filter_by(agent_id=agent.id).all()
-            return render_template('subagent_userlist.html', user=agent, agent_subusers=agent_subusers)
+            return render_template('subagent_userlist.html', user=agent, agent_subusers=agent_subusers,roles=roles)
         else:
             flash('User not found.', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('login',roles=roles))
 
     else:
         flash('Please log in to access the user list.', 'danger')
-        return redirect(url_for('login'))
+        return redirect(url_for('login',roles=roles))
 
 # Add the @app.route decorator for the manage_subagent_userlist route
 @app.route('/manage_subagent_userlist/<user_id>', methods=['POST'])
 def manage_subagent_userlist(user_id):
+    roles = session.get('roles', [])
     with current_app.app_context():
         print(f"Received user_id: {user_id}")
 
@@ -875,7 +888,7 @@ def manage_subagent_userlist(user_id):
             flash('User details not found.', 'danger')
             print("User details not found.")
 
-        return redirect(url_for('subagent_userlist'))
+        return redirect(url_for('subagent_userlist',roles=roles))
 
 
 
@@ -884,19 +897,21 @@ def agentlist():
     if 'email' in session:
         email = session['email']
         user = fetch_user_data(email)  # Fetch user data based on email
+        roles = session.get('roles', [])
         if user:
             # Fetch the list of Agents associated with the user's ID
             agent_list = Agent.query.filter_by(user_id=user.id).all()
-            return render_template('agentlist.html', user=user, agent_list=agent_list)
+            return render_template('agentlist.html', user=user, agent_list=agent_list,roles=roles)
         else:
             flash('User not found.', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('login',roles=roles))
     else:
         flash('Please log in to access the user list.', 'danger')
         return redirect(url_for('login'))
 
 @app.route('/manage_agent/<user_id>', methods=['POST'])
 def manage_agent(user_id):
+    roles = session.get('roles', [])
     with current_app.app_context():
         print(f"Received user_id: {user_id}")  # Check the user_id received
 
@@ -917,7 +932,7 @@ def manage_agent(user_id):
             flash('Agent details not found.', 'danger')
             print("Agent details not found.")  # Log the issue for further investigation
 
-        return redirect(url_for('agentlist'))
+        return redirect(url_for('agentlist',roles=roles))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -975,6 +990,7 @@ def login():
 @app.route('/verify/<model_type>', methods=['GET', 'POST'])
 def verify(model_type):
     email = session.get('email')
+    roles = session.get('roles', [])
     print(f"Email from session: {email}")  # Add this line for debugging
 
     if request.method == 'POST':
@@ -1016,7 +1032,7 @@ def verify(model_type):
                     print ('Verify Session Company_id ',company_id)
 
                     flash(f'{model_type.capitalize()} account verified!', 'success')
-                    return redirect(url_for('dashboard'))  # Redirect to the dashboard after verification
+                    return redirect(url_for('dashboard',roles=roles))  # Redirect to the dashboard after verification
                 else:
                     flash('Invalid OTP. Please try again.', 'danger')
             else:
@@ -1070,7 +1086,7 @@ def customer_create():
         return redirect(url_for('login'))
 
     company_id = session['company_id']
-
+    roles = session.get('roles', [])
     user_id = session['user_id']
 
     if request.method == 'POST':
@@ -1084,7 +1100,7 @@ def customer_create():
         existing_customer_phone = Customer.query.filter(Customer.company_id == company_id, Customer.phone_no == phone_no_with_country_code).first()
         if existing_customer_phone:
             flash('Customer with the provided phone number already exists within your company.', 'danger')
-            return jsonify({'success': False, 'message': 'Duplicate customer phone number within your company.'}), 400
+            return jsonify({'success': False, 'message': 'Duplicate customer phone number within your company.'},roles=roles), 400
 
         # Generate new customer ID
         max_customer_id = Customer.query.filter_by(company_id=company_id).with_entities(func.max(Customer.customer_id)).scalar()
@@ -1106,12 +1122,12 @@ def customer_create():
             db.session.commit()
             flash('Customer created successfully.', 'success')
             # After successfully creating a new customer
-            return jsonify({'success': True, 'customer_id': formatted_customer_id, 'customer_name': full_name})
+            return jsonify({'success': True, 'customer_id': formatted_customer_id, 'customer_name': full_name},roles=roles)
 
         except IntegrityError as e:
             db.session.rollback()
             flash(f'Error creating customer: {str(e)}. Please try again.', 'danger')
-            return jsonify({'success': False, 'message': f'Error creating customer: {str(e)}. Please try again.'}), 500
+            return jsonify({'success': False, 'message': f'Error creating customer: {str(e)}. Please try again.'},roles=roles), 500
 
     # Prepare user data for rendering if it's a GET request
     user = None
@@ -1215,17 +1231,17 @@ def customers_list():
     if 'email' in session:
         email = session['email']
         user = fetch_user_data(email)  # Fetch user data based on email
-        
+        roles = session.get('roles', [])
         if user:
             # Fetch the list of Customers associated with the user's company ID
             customers = Customer.query.filter_by(company_id=user.company_id).all()
-            return render_template('customers_list.html', user=user, customers_list=customers)  # Pass 'customers_list' instead of 'customers'
+            return render_template('customers_list.html', user=user, customers_list=customers,roles=roles)  # Pass 'customers_list' instead of 'customers'
         else:
             flash('User not found.', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('login'),roles=roles)
     else:
         flash('Please log in to access the user list.', 'danger')
-        return redirect(url_for('login'))
+        return redirect(url_for('login'),roles=roles)
 
 
 
@@ -1237,6 +1253,7 @@ def customer_leads_list():
     
     company_id = session.get('company_id')
     session_user_id = session.get('user_id')
+    roles = session.get('roles', [])
     
     if not company_id:
         flash('Company ID not found in session.', 'error')
@@ -1294,14 +1311,7 @@ def customer_leads_list():
         flash(f'Error retrieving leads: {str(e)}', 'danger')
         enhanced_leads = []
 
-    return render_template('customer_leads_list.html', leads=enhanced_leads, users=users, selected_user_id=selected_user_id)
-
-
-
-
-
-
-
+    return render_template('customer_leads_list.html', leads=enhanced_leads, users=users, selected_user_id=selected_user_id , roles=roles)
 
 
 
@@ -1314,10 +1324,11 @@ def update_leads(lead_id):
 
     company_id = session['company_id']
     user_id = session['user_id']
+    roles = session.get('roles', [])
 
-     # Directly use lead_id from the parameter
+    # Correctly query the lead with the session's company_id
     lead = Lead.query \
-        .join(Customer, (Lead.customer_id == Customer.customer_id) & (Customer.company_id == company_id)) \
+        .join(Customer, and_(Lead.customer_id == Customer.customer_id, Customer.company_id == company_id)) \
         .filter(Lead.lead_id == lead_id, Lead.company_id == company_id) \
         .options(contains_eager(Lead.customer)) \
         .first()
@@ -1333,7 +1344,7 @@ def update_leads(lead_id):
         if lead_status in [0, 1, 2, 3]:
             lead.is_leads = lead_status
             lead.is_lead_date = datetime.utcnow()
-            db.session.commit()  # Make sure to commit the change
+            db.session.commit()
             flash('Lead status updated successfully.', 'success')
         else:
             flash('Invalid lead status provided.', 'warning')
@@ -1352,16 +1363,20 @@ def update_leads(lead_id):
 
         return redirect(url_for('update_leads', lead_id=lead_id))
 
+    # Ensure the comments query uses the correct company_id and user_id
     comments = CustomerComment.query \
         .join(User, and_(CustomerComment.created_by == User.user_id, User.company_id == company_id)) \
         .filter(
             CustomerComment.lead_id == lead.lead_id,
             CustomerComment.company_id == company_id
         ) \
+        .options(db.joinedload(CustomerComment.user)) \
         .order_by(CustomerComment.created_at.desc()) \
         .all()
 
-    return render_template('update_lead.html', lead=lead, customer=lead.customer, comments=comments)
+    return render_template('update_leads.html', lead=lead, comments=comments, roles=roles)
+
+
 
 def status_label(status):
     status_map = {
@@ -1386,6 +1401,7 @@ def create_leads():
 
     company_id = session['company_id']
     user_id = session['user_id']
+    roles = session.get('roles', [])
 
     # Fetch customers from the database
     customers = Customer.query.filter_by(company_id=company_id).all()
@@ -1416,7 +1432,7 @@ def create_leads():
         flash('No customer selected or found.', 'danger')
         return redirect(url_for('create_leads'))
 
-    return render_template('create_leads.html', customers=customers)
+    return render_template('create_leads.html', customers=customers, roles=roles)
 
 
 
@@ -1434,9 +1450,10 @@ def internal_server_error(e):
 
 @app.route('/logout')
 def logout():
+    roles = session.get('roles', [])
     session.clear()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('login'))
+    return redirect(url_for('login',roles=roles))
 
 @app.route('/check-db-connection', methods=['GET'])
 def check_db_connection():
@@ -1459,6 +1476,8 @@ def leads_report():
 
     company_id = session.get('company_id')
     users = User.query.filter_by(company_id=company_id).all()
+    roles = session.get('roles', [])
+
 
     selected_user_id = request.form.get('selected_user_id', type=int) if request.method == 'POST' else None
     start_date = request.form.get('start_date')
@@ -1498,7 +1517,7 @@ def leads_report():
     return render_template('leadsreport.html', total_leads=total_leads, converted_leads=converted_leads,
                            conversion_rate=conversion_rate, lead_breakdown=lead_breakdown,
                            recent_leads=recent_leads, users=users, selected_user_id=selected_user_id,
-                           start_date=start_date, end_date=end_date)
+                           start_date=start_date, end_date=end_date ,roles=roles)
 
 app.register_blueprint(leads_bp)
 
