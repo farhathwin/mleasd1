@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template, request, redirect , url_for , flash , session , current_app , jsonify , Blueprint
+from flask_session import Session
 from init_db import User, datetime , Agent , db ,Customer ,CustomerComment ,Lead , Role
 from config import SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, SENDER_PASSWORD
 from otp_sender import send_otp_email   
@@ -18,6 +19,9 @@ from flask_migrate import Migrate
 from functools import wraps
 from sqlalchemy.orm import joinedload , contains_eager
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
+
+
+
 
 
 UPLOAD_FOLDER = 'D:/Mleasd New- Project Farhath 07-10-23/static/img'
@@ -39,6 +43,17 @@ app.permanent_session_lifetime = timedelta(minutes=45)
 
 otp_storage = {}
 registration_tokens = {}
+
+
+# Configure the session to use server-side storage
+app.config['SESSION_TYPE'] = 'filesystem'  # You can also use 'redis', 'memcached', etc.
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_KEY_PREFIX'] = 'your_prefix_'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
+app.secret_key = 'your_secret_key'  # Make sure to set a secret key
+
+Session(app)
 
 
 
