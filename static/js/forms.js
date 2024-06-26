@@ -90,10 +90,11 @@ function selectCustomer(item) {
     document.getElementById("customerSearch").value = item.textContent.trim().split(" - ")[0]; // Display only the name
     document.getElementById("customerList").style.display = "none";
 }
-// Function to close the customer creation modal
 function closeCustomerModal() {
     $('#customerCreateModal').modal('hide'); // Hide the modal
     $('#customerCreateModelForm')[0].reset(); // Reset the form fields
+    $('body').removeClass('modal-open'); // Remove the modal-open class from the body
+    $('.modal-backdrop').remove(); // Remove the modal backdrop
 }
 
 // Function to select the newly created customer in the dropdown

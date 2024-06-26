@@ -1122,12 +1122,12 @@ def customer_create():
             db.session.commit()
             flash('Customer created successfully.', 'success')
             # After successfully creating a new customer
-            return jsonify({'success': True, 'customer_id': formatted_customer_id, 'customer_name': full_name},roles=roles)
+            return jsonify({'success': True, 'customer_id': formatted_customer_id, 'customer_name': full_name})
 
         except IntegrityError as e:
             db.session.rollback()
             flash(f'Error creating customer: {str(e)}. Please try again.', 'danger')
-            return jsonify({'success': False, 'message': f'Error creating customer: {str(e)}. Please try again.'},roles=roles), 500
+            return jsonify({'success': False, 'message': f'Error creating customer: {str(e)}. Please try again.'}), 500
 
     # Prepare user data for rendering if it's a GET request
     user = None
@@ -1135,7 +1135,7 @@ def customer_create():
         email = session['email']
         user = fetch_user_data(email)
 
-    return render_template('customer_create.html', user=user)
+    return render_template('customer_create.html', user=user,roles=roles)
 
 @app.route('/bulk-upload', methods=['GET', 'POST'])
 def bulk_upload():
@@ -1403,6 +1403,7 @@ def create_leads():
     user_id = session['user_id']
     roles = session.get('roles', [])
 
+
     # Fetch customers from the database
     customers = Customer.query.filter_by(company_id=company_id).all()
 
@@ -1432,7 +1433,7 @@ def create_leads():
         flash('No customer selected or found.', 'danger')
         return redirect(url_for('create_leads'))
 
-    return render_template('create_leads.html', customers=customers, roles=roles)
+    return render_template('create_leads.html', customers=customers,roles=roles)
 
 
 
