@@ -955,6 +955,7 @@ def login():
 
     if request.method == 'POST':
         email = request.form.get('email')
+        tab_id = request.form.get('tabId')
         model_type = request.form.get('model_type')
 
         user = User.query.filter_by(email=email).first()
@@ -976,24 +977,22 @@ def login():
                 user.date = datetime.utcnow()
                 user.time = datetime.now().strftime("%H:%M:%S")
                 if user:
-                    session['user_id'] = user.id
-                    session['roles'] = [role.name for role in user.roles]  # Store user roles in session
+                    session[tab_id] = {'user_id': user.id, 'roles': [role.name for role in user.roles]}  # Store user roles in session
 
             elif model_type == 'agent':
                 agent.otp = new_otp
                 agent.date = datetime.utcnow()
                 agent.time = datetime.now().strftime("%H:%M:%S")
                 if agent:
-                    session['user_id'] = agent.id
-                    session['roles'] = []  # Agents may not have roles or handle differently if needed
+                    session[tab_id] = {'user_id': agent.id, 'roles': []}  # Agents may not have roles or handle differently if needed
 
             db.session.commit()
 
             if send_otp_email(email, new_otp, SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, SENDER_PASSWORD):
-                session['email'] = email
-                session['model_type'] = model_type
+                session[tab_id]['email'] = email
+                session[tab_id]['model_type'] = model_type
 
-                url = url_for('verify', model_type=model_type)
+                url = url_for('verify', model_type=model_type, tab_id=tab_id)
                 return redirect(url)
             else:
                 flash('Error sending OTP. Please try again later.', 'danger')
@@ -1004,8 +1003,9 @@ def login():
 
 @app.route('/verify/<model_type>', methods=['GET', 'POST'])
 def verify(model_type):
-    email = session.get('email')
-    roles = session.get('roles', [])
+    tab_id = request.args.get('tab_id')
+    email = session.get(tab_id, {}).get('email')
+    roles = session.get(tab_id, {}).get('roles', [])
     print(f"Email from session: {email}")  # Add this line for debugging
 
     if request.method == 'POST':
@@ -1032,22 +1032,22 @@ def verify(model_type):
                     user.is_verified = True
                     db.session.commit()
 
-                    session['model_type'] = model_type
-                    session['email'] = email
+                    session[tab_id]['model_type'] = model_type
+                    session[tab_id]['email'] = email
 
                     # Fetch the company ID based on the user's email and store it in the session
                     company_id = user.company_id
-                    session['company_id'] = company_id
+                    session[tab_id]['company_id'] = company_id
                     user_id = user.user_id
-                    session['user_id'] = user_id
+                    session[tab_id]['user_id'] = user_id
                     business_name = user.business_name
-                    session['business_name'] = business_name
+                    session[tab_id]['business_name'] = business_name
                     
                     print ('Session User_id ',user_id )
                     print ('Verify Session Company_id ',company_id)
 
                     flash(f'{model_type.capitalize()} account verified!', 'success')
-                    return redirect(url_for('dashboard',roles=roles))  # Redirect to the dashboard after verification
+                    return redirect(url_for('dashboard', tab_id=tab_id))  # Redirect to the dashboard after verification
                 else:
                     flash('Invalid OTP. Please try again.', 'danger')
             else:
@@ -1056,18 +1056,19 @@ def verify(model_type):
             print(f'Error querying the database: {e}')
             flash('Error verifying the account. Please try again later.', 'danger')
 
-    return render_template('verify.html', model_type=model_type)
+    return render_template('verify.html', model_type=model_type, tab_id=tab_id)
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
-    if 'email' in session:
-        email = session['email']
+    tab_id = request.args.get('tab_id')
+    if tab_id and session.get(tab_id):
+        email = session[tab_id].get('email')
         user = fetch_user_data(email) # Fetch user data based on email
         if user:
-            roles = session.get('roles', [])
+            roles = session[tab_id].get('roles', [])
             # Implement logic specific to the master dashboard
             # Fetch additional data if required
-            return render_template('dashboard.html', user=user , roles=roles)
+            return render_template('dashboard.html', user=user, roles=roles)
         else:
             flash('User not found.', 'danger')
             return redirect(url_for('login'))
